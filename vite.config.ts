@@ -11,6 +11,7 @@ import { VueRouterAutoImports } from 'unplugin-vue-router'
 import Components from 'unplugin-vue-components/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import Layouts from 'vite-plugin-vue-layouts-next'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -32,11 +33,13 @@ export default defineConfig({
         /\.vue\.[tj]sx?\?vue/, // .vue (vue-loader with experimentalInlineMatchResource enabled)
         /\.md$/, // .md
       ],
+      resolvers: [ElementPlusResolver()],
       imports: ['vue', VueRouterAutoImports, '@vueuse/core'],
       dts: 'src/auto-imports.d.ts',
     }),
     Components({
       dts: 'src/components.d.ts',
+      resolvers: [ElementPlusResolver()],
     }),
     Layouts({
       layoutsDirs: 'src/layouts',
