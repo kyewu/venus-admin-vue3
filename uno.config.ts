@@ -5,6 +5,7 @@ export default defineConfig({
     presetWind4(),
     presetIcons({
       prefix: 'i-',
+      autoInstall: true,
       extraProperties: {
         display: 'inline-block',
         height: '1.2em',

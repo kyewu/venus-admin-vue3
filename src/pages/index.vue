@@ -1,40 +1,34 @@
 <template>
-  <div class="color-rose" ref="target">home</div>
-  {{ x }} - {{ y }} - {{ isOutside }}
-  <hello-world
-    msg="hello world!"
-    foo="'123'"
-    @change="changeClick"
-    v-model="modelValue"
-    @update:model-value="changeModelValue"
-  ></hello-world>
-   <div class="mb-4">
+  <div class="mb-4">
+    <DarkModeToggle :isDark="isDark" />
+    <FullScreen />
+    <component :is="Icon" :icon="iconRef"></component>
     <el-button>Default</el-button>
-    <el-button type="primary">Primary</el-button>
-    <el-button type="success">Success</el-button>
-    <el-button type="info">Info</el-button>
-    <el-button type="warning">Warning</el-button>
-    <el-button type="danger">Danger</el-button>
+    <SvgIcon name="icon-xuehua"></SvgIcon>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useRegisterSW } from 'virtual:pwa-register/vue'
+import { Icon, loadIcons } from '@iconify/vue'
+import json from '@iconify/json/json/mdi.json'
+import ids from 'virtual:svg-icons/ids'
+console.log(ids)
 const count = ref(0)
 console.log(count.value)
+const isDark = ref(false)
+const iconRef = ref()
+const iconNamesArr = Object.keys(json.icons)
+onBeforeMount(async () => {
+  await loadIcons(iconNamesArr.map((item) => `${json.prefix}:${item}`))
+})
 
-const target = useTemplateRef<HTMLDivElement>('target')
-const { x, y, isOutside } = useMouseInElement(target)
-
-const changeClick = (value: number) => {
-  console.log(value)
-}
-
-const modelValue = ref('hello model value')
-
-const changeModelValue = (value: string) => {
-  console.log('change model value:', value)
-}
+onMounted(() => {
+  setInterval(() => {
+    const index = Math.floor(Math.random() * 10)
+    iconRef.value = `${json.prefix}:${iconNamesArr[index]}`
+  }, 1000);
+})
 
 onMounted(() => {
   useRegisterSW({

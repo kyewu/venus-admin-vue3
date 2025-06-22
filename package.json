@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@iconify/json": "^2.2.323",
+    "@iconify/vue": "^5.0.0",
     "@tsconfig/node22": "^22.0.0",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.13.9",
@@ -55,6 +56,7 @@
     "unplugin-vue-router": "^0.12.0",
     "vite": "^6.2.1",
     "vite-plugin-pwa": "^1.0.0",
+    "vite-plugin-svg-icons-ng": "^1.4.1",
     "vite-plugin-vue-devtools": "^7.7.2",
     "vite-plugin-vue-layouts-next": "^0.0.11",
     "vitest": "^3.0.8",

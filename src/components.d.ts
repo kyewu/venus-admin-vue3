@@ -8,9 +8,18 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    DarkModeToggle: typeof import('./components/Themes/DarkModeToggle.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElColorPicker: typeof import('element-plus/es')['ElColorPicker']
+    ElDialog: typeof import('element-plus/es')['ElDialog']
+    ElSlider: typeof import('element-plus/es')['ElSlider']
+    ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    FullScreen: typeof import('./components/Themes/FullScreen.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
+    IconList: typeof import('./components/Icon/IconList.vue')['default']
+    IconPicker: typeof import('./components/Icon/IconPicker.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SvgIcon: typeof import('./components/Icon/SvgIcon.vue')['default']
   }
 }
