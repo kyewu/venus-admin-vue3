@@ -13,6 +13,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 import Layouts from 'vite-plugin-vue-layouts-next'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons-ng'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import process from 'node:process'
 import path from 'node:path'
 
@@ -50,6 +51,10 @@ export default defineConfig({
     }),
     createSvgIconsPlugin({
       iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
+    }),
+    VueI18nPlugin({
+      include: [path.resolve(process.cwd(), 'src/locales/**')],
+      dropMessageCompiler: true,
     }),
     VitePWA(),
     vueDevTools(),

@@ -5,6 +5,7 @@
     <component :is="Icon" :icon="iconRef"></component>
     <el-button>Default</el-button>
     <SvgIcon name="icon-xuehua"></SvgIcon>
+    <p>{{ $t('hello') }}</p>
   </div>
 </template>
 
@@ -12,8 +13,7 @@
 import { useRegisterSW } from 'virtual:pwa-register/vue'
 import { Icon, loadIcons } from '@iconify/vue'
 import json from '@iconify/json/json/mdi.json'
-import ids from 'virtual:svg-icons/ids'
-console.log(ids)
+
 const count = ref(0)
 console.log(count.value)
 const isDark = ref(false)

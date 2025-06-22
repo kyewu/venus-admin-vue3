@@ -7,7 +7,7 @@
     "src/typed-router.d.ts",
     "src/auto-imports.d.ts",
     "src/components.d.ts"
-  ],
+, "locales"  ],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
@@ -20,7 +20,8 @@
       "vite-plugin-pwa/client",
       "vite-plugin-pwa/vue",
       "vite-plugin-vue-layouts-next/client",
-      "element-plus/global"
+      "element-plus/global",
+      "@intlify/unplugin-vue-i18n/messages"
     ]
   }
 }
