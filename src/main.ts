@@ -9,21 +9,13 @@ import 'virtual:uno.css'
 import 'virtual:svg-icons/register' // recommended
 // if you just want to import css
 import 'element-plus/theme-chalk/dark/css-vars.css'
-import messages from '@intlify/unplugin-vue-i18n/messages'
-import { createI18n } from 'vue-i18n'
+import I18n from './modules/i8n'
 
-const i18n = createI18n({
-  locale: 'zh-cn',
-  fallbackLocale: 'en',
-  messages
-})
 
 const app = createApp(App)
 
 app.use(createPinia())
-app.use(i18n)
 app.use(router)
+app.use(I18n)
 
 app.mount('#app')
-
-console.log('i18n messages:', messages)

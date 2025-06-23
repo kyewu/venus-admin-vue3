@@ -53,8 +53,9 @@ export default defineConfig({
       iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
     }),
     VueI18nPlugin({
-      include: [path.resolve(process.cwd(), 'src/locales/**')],
+      include: [path.resolve(process.cwd(), 'locales/**')],
       dropMessageCompiler: true,
+      compositionOnly: true, // change the default language is forbidden
     }),
     VitePWA(),
     vueDevTools(),
