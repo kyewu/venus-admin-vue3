@@ -1,5 +1,11 @@
 <template>
   <div class="mb-4">
+    <input v-model="inputValue"/>
+    <div v-copy.mute="inputValue">copy</div>
+    <div v-copy="inputValue">copy</div>
+    <div v-debounce="() => console.log('click')">debounce click</div>
+    <el-button type="primary" v-throttle="() => console.log('click throttle')">throttle directive</el-button>
+    <el-button class="m-0!" v-draggable>Draggable</el-button>
     <DarkModeToggle :isDark="isDark" />
     <FullScreen />
     <component :is="Icon" :icon="iconRef"></component>
@@ -19,6 +25,7 @@ import { Icon, loadIcons } from '@iconify/vue'
 import json from '@iconify/json/json/mdi.json'
 import { loadLocaleMessages } from '@/modules/i8n'
 
+const inputValue = ref('copy msg')
 const count = ref(0)
 console.log(count.value)
 const isDark = ref(false)

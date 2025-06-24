@@ -21,5 +21,6 @@ declare module 'vue-router/auto-routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[...path]': RouteRecordInfo<'/[...path]', '/:path(.*)', { path: ParamValue<true> }, { path: ParamValue<false> }>,
     '/components/Icon/ep-icon': RouteRecordInfo<'/components/Icon/ep-icon', '/components/Icon/ep-icon', Record<never, never>, Record<never, never>>,
+    '/components/Notice/notice-message': RouteRecordInfo<'/components/Notice/notice-message', '/components/Notice/notice-message', Record<never, never>, Record<never, never>>,
   }
 }

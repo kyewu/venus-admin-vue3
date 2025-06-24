@@ -1,3 +1,7 @@
+import type { IconProps as IconPropsOrigin } from '@iconify/vue'
+
+export type IconProps = IconPropsOrigin
+
 export interface IconPickerSubmitDataProps {
   icon: string
   color: string
