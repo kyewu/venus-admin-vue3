@@ -38,7 +38,7 @@ export default defineConfig({
         /\.md$/, // .md
       ],
       resolvers: [ElementPlusResolver()],
-      imports: ['vue', VueRouterAutoImports, '@vueuse/core'],
+      imports: ['vue', VueRouterAutoImports, '@vueuse/core', 'pinia'],
       dts: 'src/auto-imports.d.ts',
     }),
     Components({
