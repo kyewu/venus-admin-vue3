@@ -1,11 +1,13 @@
 <template>
-  <el-row class="items-center">
-    <Iconify :icon="collapse ? 'ep:fold' : 'ep:expand'" class="text-2xl cursor-pointer ml-2"></Iconify>
+  <el-row class="items-center px-4">
+    <Iconify :icon="collapse ? 'ep:fold' : 'ep:expand'" class="text-2xl cursor-pointer"></Iconify>
     <div class="flex-grow"></div>
     <el-row class="items-center">
       <DarkModeToggle class="mr-2"></DarkModeToggle>
       <ChangeLocale class="mr-2" :locales="locales"></ChangeLocale>
       <FullScreen></FullScreen>
+      <el-divider direction="vertical" />
+      <AvatarMenu :trigger="'click'"></AvatarMenu>
     </el-row>
   </el-row>
 </template>
