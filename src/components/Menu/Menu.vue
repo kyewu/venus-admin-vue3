@@ -1,5 +1,5 @@
 <template>
-  <el-menu :default-active="defaultActive" :style="{ '--bg-color': backgroundColor }" :mode="mode" @select="handleSelect">
+  <el-menu :default-active="defaultActive" :style="{ '--el-menu-bg-color': backgroundColor }" :mode="mode" @select="handleSelect">
     <SubMenu v-for="(data, index) in filterData" :key="index" :data="data" v-bind="subMenuProps"></SubMenu>
   </el-menu>
 </template>

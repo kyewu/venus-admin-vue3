@@ -16,7 +16,6 @@ const permission: Directive = {
 
     checkPermission()
     useUserStore().$subscribe((mutations, state) => {
-      console.log(mutations)
       console.log(state)
       checkPermission()
     })

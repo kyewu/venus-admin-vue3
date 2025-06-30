@@ -1,6 +1,9 @@
-import { defineConfig, presetIcons } from 'unocss'
+import { defineConfig, presetIcons, transformerDirectives } from 'unocss'
 import presetWind4 from '@unocss/preset-wind4'
 export default defineConfig({
+  transformers: [
+    transformerDirectives(),
+  ],
   presets: [
     presetWind4(),
     presetIcons({

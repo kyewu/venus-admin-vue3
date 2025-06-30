@@ -9,8 +9,7 @@
 </template>
 
 <script setup lang="ts">
-const { foo, msg } = defineProps<{ foo: string; msg: string }>()
-console.log(foo)
+const { msg } = defineProps<{ foo: string; msg: string }>()
 const emit = defineEmits<{ changeClick: [id: number] }>()
 const change = () => {
   modelValue.value = 'hello model value+'

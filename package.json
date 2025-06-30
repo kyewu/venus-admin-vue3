@@ -35,6 +35,7 @@
     "@types/node": "^22.13.9",
     "@unocss/preset-icons": "66.1.0-beta.8",
     "@unocss/preset-wind4": "66.1.0-beta.8",
+    "@unocss/transformer-directives": "^66.3.2",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitejs/plugin-vue-jsx": "^4.1.1",
     "@vitest/eslint-plugin": "^1.1.36",

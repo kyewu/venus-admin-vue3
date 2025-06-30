@@ -1,12 +1,14 @@
 <template>
   <div class="w-full h-screen overflow-hidden flex flex-nowrap flex-row">
-    <div class="h-full" :style="{ width: typeof menuWidth === 'number' ? `${menuWidth}px` : menuWidth }">
+    <div class="h-full"
+      :style="{ width: menuWidth + 'px' }">
       <el-scrollbar :height="'h-full'" view-class="h-full">
-        <Menu :data="menus" :mode="mode" class="h-full"></Menu>
+        <Menu :data="menus" :mode="mode" class="h-full" :background-color="menuBgColor"></Menu>
       </el-scrollbar>
     </div>
     <div class="content flex-1">
-      <Header :collapse="false" :locales="locales"></Header>
+      <Header :collapse="collapse" :locales="locales" :username="username" :src="avatar"
+        :data="avatarMenu" @themeSettingsChange="handleThemeChange"></Header>
       <router-view></router-view>
     </div>
   </div>
@@ -17,36 +19,40 @@ import type { AppRouteMenuItem } from '@/components/Menu/types';
 import type { RouteRecordRaw } from 'vue-router';
 import Header from '@/components/Layouts/Header.vue';
 import { routes } from 'vue-router/auto-routes';
-import type { LocaleItem } from '@/components/Themes/types';
+import type { DropDownMenuItem } from '@/components/Avatar/types';
+import type { HeaderProps } from '@/components/Layouts/types';
+import type { ThemeSettingsProps } from '@/components/Themes/types';
 
-interface ThemeSetting {
+interface ThemeSettingOptions extends HeaderProps {
   mode: 'vertical' | 'horizontal';
-  menuWidth: number | string;
-  locales?: LocaleItem[]
+  username: string,
+  avatar: string,
+  avatarMenu: DropDownMenuItem[]
 }
 
-withDefaults(defineProps<ThemeSetting>(), {
+const settings = reactive<ThemeSettingOptions>({
   mode: 'vertical',
-  menuWidth: 200,
-  locales: () => {
-    return [
-      {
-        text: '中文',
-        icon: 'uil:letter-chinese-a',
-        name: 'zh-CN'
-      },
-      {
-        text: 'English',
-        icon: 'ri:english-input',
-        name: 'en'
-      }
-    ]
-  }
+  collapse: false,
+  avatar: '',
+  avatarMenu: [],
+  username: 'Kye',
+  locales: [
+    {
+      text: '中文',
+      icon: 'uil:letter-chinese-a',
+      name: 'zh-CN'
+    },
+    {
+      text: 'English',
+      icon: 'ri:english-input',
+      name: 'en'
+    }
+  ]
 })
 
+const {mode, collapse,avatar, avatarMenu, username, locales } = toRefs(settings)
 
 const menus = computed(() => generateMenus(routes))
-console.log(menus)
 
 function generateMenus(routes: RouteRecordRaw[]): AppRouteMenuItem[] {
   const menuData: AppRouteMenuItem[] = []
@@ -60,11 +66,23 @@ function generateMenus(routes: RouteRecordRaw[]): AppRouteMenuItem[] {
       alias: route.alias,
       component: route.component
     }
-    if(route.children?.length && Array.isArray(route.children)) {
+    if (route.children?.length && Array.isArray(route.children)) {
       menuItem.children = generateMenus(route.children)
     }
     menuData.push(menuItem)
   })
   return menuData
 }
+
+const handleThemeChange = (themeSettings: ThemeSettingsProps): void => {
+  console.log('themeSettings:',themeSettings)
+  settings.settings = themeSettings
+}
+
+const menuWidth = computed(() => {
+  return settings.settings? settings.settings.menuWidth : 240
+})
+const menuBgColor = computed(() => {
+  return settings.settings ? settings.settings.backgroundColor : '#001529'
+})
 </script>
