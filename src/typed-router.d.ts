@@ -20,7 +20,11 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[...path]': RouteRecordInfo<'/[...path]', '/:path(.*)', { path: ParamValue<true> }, { path: ParamValue<false> }>,
-    '/components/Icon/ep-icon': RouteRecordInfo<'/components/Icon/ep-icon', '/components/Icon/ep-icon', Record<never, never>, Record<never, never>>,
-    '/components/Notice/notice-message': RouteRecordInfo<'/components/Notice/notice-message', '/components/Notice/notice-message', Record<never, never>, Record<never, never>>,
+    '/about': RouteRecordInfo<'/about', '/about', Record<never, never>, Record<never, never>>,
+    '/components': RouteRecordInfo<'/components', '/components', Record<never, never>, Record<never, never>>,
+    '/components/icon': RouteRecordInfo<'/components/icon', '/components/icon', Record<never, never>, Record<never, never>>,
+    '/components/icon/ep-icon': RouteRecordInfo<'/components/icon/ep-icon', '/components/icon/ep-icon', Record<never, never>, Record<never, never>>,
+    '/components/notice': RouteRecordInfo<'/components/notice', '/components/notice', Record<never, never>, Record<never, never>>,
+    '/components/notice/notice-message': RouteRecordInfo<'/components/notice/notice-message', '/components/notice/notice-message', Record<never, never>, Record<never, never>>,
   }
 }

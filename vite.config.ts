@@ -24,7 +24,7 @@ export default defineConfig({
       dts: 'src/typed-router.d.ts',
       routesFolder: 'src/pages',
       extensions: ['.vue'],
-      exclude: ['**/components/*.vue'],
+      exclude: ['src/components/*.vue'],
     }),
     vue(),
     vueJsx(),
@@ -43,6 +43,8 @@ export default defineConfig({
     }),
     Components({
       dts: 'src/components.d.ts',
+      directoryAsNamespace: false,
+      collapseSamePrefixes: true,
       resolvers: [ElementPlusResolver()],
     }),
     Layouts({

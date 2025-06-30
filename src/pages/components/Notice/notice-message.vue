@@ -6,6 +6,13 @@
 <script setup lang="ts">
 import type { NoticeMessageListProps } from '@/components/Notice/types';
 
+definePage({
+  meta: {
+    title: 'Notice',
+    icon: 'ep:bell',
+  }
+})
+
 const noticeInfo = ref<NoticeMessageListProps>({
   lists: [
     { title: '通知', contents: [{ title: '通知1' }, { title: '通知2' }] },

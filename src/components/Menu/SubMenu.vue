@@ -6,7 +6,7 @@
     <el-sub-menu :index="getIndex(data)">
       <template v-if="!data.meta?.icon" #title>{{ data.meta?.title }}</template>
       <template v-else #title>
-        <Iconify :icon="data.meta?.icon"></Iconify>
+        <Iconify :icon="data.meta?.icon" :style="iconProps?.style" :class="iconProps?.class"></Iconify>
       </template>
       <SubMenu v-for="(child, index) in data.children" :key="`${data.path}/${index}`" :data="child" v-bind="subAttrs">
       </SubMenu>
@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import type { SubMenuProps as ElSubMenuProps } from 'element-plus';
-import type { AppRouteMenuItem } from './types';
+import type { AppRouteMenuItem, IconOptions } from './types';
 import { useMenu } from './useMenu';
 
 interface SubMenuProps extends Partial<ElSubMenuProps> {
@@ -33,6 +33,8 @@ const subAttrs = computed(() => {
   const { data, ...rest } = props
   return rest
 })
+
+const iconProps =inject<IconOptions>('iconProps')
 </script>
 
 <style scoped></style>

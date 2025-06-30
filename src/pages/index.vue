@@ -1,11 +1,16 @@
 <template>
-  <Menu class="el-menu w-[200px] min-h-[400px] h-full" :mode="mode"></Menu>
+  <div></div>
 </template>
 
 <script setup lang="ts">
 import { useRegisterSW } from 'virtual:pwa-register/vue'
-import type { LayoutDirection } from 'element-plus'
-const mode: LayoutDirection = 'vertical'
+
+definePage({
+  meta: {
+    title: 'Home',
+    icon: 'ep:home-filled',
+  }
+})
 
 onMounted(() => {
   useRegisterSW({
