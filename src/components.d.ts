@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ChangeLocale: typeof import('./components/Themes/ChangeLocale.vue')['default']
     DarkModeToggle: typeof import('./components/Themes/DarkModeToggle.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
@@ -16,6 +17,8 @@ declare module 'vue' {
     ElColorPicker: typeof import('element-plus/es')['ElColorPicker']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
+    ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
+    ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElRow: typeof import('element-plus/es')['ElRow']
@@ -27,6 +30,7 @@ declare module 'vue' {
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
     FullScreen: typeof import('./components/Themes/FullScreen.vue')['default']
+    Header: typeof import('./components/Layouts/Header.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     Iconify: typeof import('./components/Icon/Iconify.vue')['default']
     IconList: typeof import('./components/Icon/IconList.vue')['default']
