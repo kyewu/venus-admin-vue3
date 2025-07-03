@@ -1,10 +1,10 @@
 <template>
   <el-row class="items-center px-4">
-    <Iconify :icon="collapse ? 'ep:fold' : 'ep:expand'" class="text-2xl cursor-pointer"></Iconify>
+    <Iconify :icon="collapse ? 'ep:fold' : 'ep:expand'" class="text-2xl cursor-pointer" @click="collapseModel = !collapseModel"></Iconify>
     <div class="flex-grow"></div>
     <el-row class="items-center">
       <ThemeSettings @change="handleThemeChange"></ThemeSettings>
-      <DarkModeToggle class="mr-2"></DarkModeToggle>
+      <DarkModeToggle class="mr-2" :dark="settings?.darkMode" @change="handleDarkChange"></DarkModeToggle>
       <ChangeLocale class="mr-2" :locales="locales"></ChangeLocale>
       <FullScreen></FullScreen>
       <el-divider direction="vertical" />
@@ -26,9 +26,11 @@ import type { ThemeSettingsProps } from '../Themes/types';
 const props = withDefaults(defineProps<HeaderProps>(), {
   collapse: false,
 })
+const collapseModel = defineModel<boolean>('collapse', { default: false })
+const localSettings = reactive({ ...props })
 const emits = defineEmits<{
   command: [arg: string | number | object],
-  themeSettingsChange: [settings: ThemeSettingsProps]
+  themeSettingsChange: [settings: ThemeSettingsProps],
 }>()
 const avatarProps = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,12 +38,25 @@ const avatarProps = computed(() => {
   return restProps
 })
 
+watch(() => localSettings.settings, () => {
+  if (localSettings.settings) {
+    emits('themeSettingsChange', localSettings.settings)
+  }
+}, {
+  deep: true
+})
+
 const handleCommand = (command: string | number | object) => {
   emits('command', command)
 }
 
 const handleThemeChange = (themeSettings: ThemeSettingsProps) => {
-  emits('themeSettingsChange', themeSettings)
+  localSettings.settings = themeSettings
+}
+const handleDarkChange = (darkMode: boolean) => {
+  if (localSettings.settings) {
+    localSettings.settings.darkMode = darkMode
+  }
 }
 </script>
 

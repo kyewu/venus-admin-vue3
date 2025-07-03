@@ -5,7 +5,8 @@
 <script setup lang="ts">
 definePage({
   meta: {
-    title: 'Components'
+    title: 'Components',
+    icon: 'ep:menu',
   }
 })
 </script>

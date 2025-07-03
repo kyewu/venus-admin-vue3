@@ -7,6 +7,7 @@
       <template v-if="!data.meta?.icon" #title>{{ data.meta?.title }}</template>
       <template v-else #title>
         <Iconify :icon="data.meta?.icon" :style="iconProps?.style" :class="iconProps?.class"></Iconify>
+        <span>{{ data.meta?.title }}</span>
       </template>
       <SubMenu v-for="(child, index) in data.children" :key="`${data.path}/${index}`" :data="child" v-bind="subAttrs">
       </SubMenu>
@@ -37,4 +38,5 @@ const subAttrs = computed(() => {
 const iconProps =inject<IconOptions>('iconProps')
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

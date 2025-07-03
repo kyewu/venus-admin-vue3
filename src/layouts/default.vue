@@ -1,14 +1,14 @@
 <template>
   <div class="w-full h-screen overflow-hidden flex flex-nowrap flex-row">
-    <div class="h-full"
-      :style="{ width: menuWidth + 'px' }">
+    <div class="h-full" :style="{ width: collapse ? '64px' : menuWidth + 'px' }">
       <el-scrollbar :height="'h-full'" view-class="h-full">
-        <Menu :data="menus" :mode="mode" class="h-full" :background-color="menuBgColor"></Menu>
+        <Menu :data="menus" :mode="mode" :collapse="collapse" text-color="#b8b8b8" class="h-full"
+          :background-color="menuBgColor"></Menu>
       </el-scrollbar>
     </div>
     <div class="content flex-1">
-      <Header :collapse="collapse" :locales="locales" :username="username" :src="avatar"
-        :data="avatarMenu" @themeSettingsChange="handleThemeChange"></Header>
+      <Header :locales="locales" :username="username" :src="avatar" :data="avatarMenu" v-model:collapse="collapse"
+        @themeSettingsChange="handleThemeChange"></Header>
       <router-view></router-view>
     </div>
   </div>
@@ -50,7 +50,7 @@ const settings = reactive<ThemeSettingOptions>({
   ]
 })
 
-const {mode, collapse,avatar, avatarMenu, username, locales } = toRefs(settings)
+const { mode, collapse, avatar, avatarMenu, username, locales } = toRefs(settings)
 
 const menus = computed(() => generateMenus(routes))
 
@@ -75,14 +75,14 @@ function generateMenus(routes: RouteRecordRaw[]): AppRouteMenuItem[] {
 }
 
 const handleThemeChange = (themeSettings: ThemeSettingsProps): void => {
-  console.log('themeSettings:',themeSettings)
   settings.settings = themeSettings
 }
 
 const menuWidth = computed(() => {
-  return settings.settings? settings.settings.menuWidth : 240
+  return settings.settings ? settings.settings.menuWidth : 240
 })
 const menuBgColor = computed(() => {
-  return settings.settings ? settings.settings.backgroundColor : '#001529'
+  return settings.settings ? settings.settings.backgroundColor : 'var(--el-menu-bg-color)'
 })
+
 </script>

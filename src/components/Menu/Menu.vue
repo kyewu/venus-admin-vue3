@@ -1,5 +1,5 @@
 <template>
-  <el-menu :default-active="defaultActive" :style="{ '--el-menu-bg-color': backgroundColor }" :mode="mode" @select="handleSelect">
+  <el-menu :default-active="defaultActive" :collapse="collapse" :style="{ '--el-menu-bg-color': backgroundColor }" :mode="mode" @select="handleSelect">
     <SubMenu v-for="(data, index) in filterData" :key="index" :data="data" v-bind="subMenuProps"></SubMenu>
   </el-menu>
 </template>
@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<Partial<MenuProps>>(), {
   mode: 'horizontal',
   defaultActive: '1',
   iconProps: () => ({ style: { fontSize: '20px' }, class: 'mr-3' }),
-  backgroundColor: 'transparent'
+  backgroundColor: 'var(--el-menu-bg-color)'
 })
 
 provide('iconProps', props.iconProps)
@@ -33,4 +33,6 @@ const handleSelect = (index: string, indexPath: string[]) => {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+
+</style>
