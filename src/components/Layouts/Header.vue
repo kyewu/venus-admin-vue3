@@ -1,7 +1,9 @@
 <template>
   <el-row class="items-center px-4">
     <Iconify :icon="collapse ? 'ep:fold' : 'ep:expand'" class="text-2xl cursor-pointer" @click="collapseModel = !collapseModel"></Iconify>
-    <div class="flex-grow"></div>
+    <div class="flex-grow overflow-hidden">
+      <slot></slot>
+    </div>
     <el-row class="items-center">
       <ThemeSettings @change="handleThemeChange"></ThemeSettings>
       <DarkModeToggle class="mr-2" :dark="settings?.darkMode" @change="handleDarkChange"></DarkModeToggle>

@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-screen overflow-hidden flex flex-nowrap flex-row">
-    <div class="h-full" :style="{ width: collapse ? '64px' : menuWidth + 'px' }">
+    <div v-if="settings.settings?.mode === 'sidebar'" class="h-full" :style="{ width: collapse ? '64px' : menuWidth + 'px' }">
       <el-scrollbar :height="'h-full'" view-class="h-full">
         <Menu :data="menus" :mode="mode" :collapse="collapse" text-color="#b8b8b8" class="h-full"
           :background-color="menuBgColor"></Menu>
@@ -8,7 +8,10 @@
     </div>
     <div class="content flex-1">
       <Header :locales="locales" :username="username" :src="avatar" :data="avatarMenu" v-model:collapse="collapse"
-        @themeSettingsChange="handleThemeChange"></Header>
+        @themeSettingsChange="handleThemeChange">
+        <Menu v-if="settings.settings?.mode === 'top'" :data="menus" mode="horizontal" :collapse="collapse" class="h-full"
+          :background-color="menuBgColor"></Menu>
+      </Header>
       <router-view></router-view>
     </div>
   </div>
