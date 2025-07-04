@@ -50,12 +50,47 @@ export function useMenu() {
 
   function getSubMenus(menus: AppRouteMenuItem[]) {
     const route = useRoute()
-    console.log(route)
     const path = computed(() => {
-      return route?.path || '/'
+      if(route.path === '/') return '/'
+      const rootPath = route.path.split('/')[1]
+      return rootPath ? `/${rootPath}` : '/'
     })
     const filterMenus = filterAndOrderMenus(menus)
     return filterMenus.find((item) => item.path === path.value)?.children || []
+  }
+
+  function getItemCondition(menus: AppRouteMenuItem[], fn: (item: AppRouteMenuItem) => boolean) {
+    for (let i = 0; i < menus.length; i++) {
+      if (fn(menus[i])) {
+        return menus[i]
+      } else {
+        if (menus[i].children && Array.isArray(menus[i].children)) {
+          const item = getItemCondition(menus[i].children!, fn) as AppRouteMenuItem | undefined
+          if (item) {
+            return item
+          }
+        }
+      }
+    }
+  }
+
+  // 获取当前需要open的子菜单信息
+  function getParentMenu(menus: AppRouteMenuItem[]): AppRouteMenuItem | undefined {
+    const route = useRoute()
+    if (!route) {
+      return {} as AppRouteMenuItem
+    }
+    const path = computed(() => route.path)
+    return getItemCondition(menus, (item) => {
+      const arr = path.value.split('/')
+      if (arr.length < 3) return false
+      arr.pop()
+      return arr.join('/') === item.name
+    })
+  }
+
+  function getItem(menus: AppRouteMenuItem[], path: string) {
+    return getItemCondition(menus, (item) => item.meta?.key === path)
   }
 
   function getIndex(item: AppRouteMenuItem): string {
@@ -63,6 +98,8 @@ export function useMenu() {
   }
 
   return {
+    getParentMenu,
+    getItem,
     generateMenuKeys,
     getTopMenus,
     getSubMenus,

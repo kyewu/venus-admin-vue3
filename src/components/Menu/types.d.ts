@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'vue';
+import { RouteLocationRaw } from 'vue-router'
 
 interface RouteMeta {
   layout?: string
@@ -32,3 +33,16 @@ export interface DropDownProps<T> {
   iconClass?: string
   // current?: number
 }
+
+export interface MenuItemClicked {
+  index: string
+  indexPath: string[]
+  route?: RouteLocationRaw
+}
+
+export type MenuSelectEvent = [
+  index: string,
+  indexPath: string[],
+  item: any,
+  routerResult?: Promise<void | any>
+]

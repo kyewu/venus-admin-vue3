@@ -5,12 +5,12 @@
     <el-menu-item v-if="collapse" :index="getIndex(data)" :disabled="data.meta?.disabled">
       <Iconify :icon="data.meta?.icon" :style="iconProps?.style" :class="iconProps?.class"></Iconify>
       <template #title>
-        {{ data.meta?.title ? $t(data.meta?.title) : '' }}
+        <span class="truncate w-full">{{ data.meta?.title ? $t(data.meta?.title) : '' }}</span>
       </template>
     </el-menu-item>
     <el-menu-item v-else :index="getIndex(data)" :disabled="data.meta?.disabled">
       <Iconify :icon="data.meta?.icon" :style="iconProps?.style" :class="iconProps?.class"></Iconify>
-      <span>{{ data.meta?.title ? $t(data.meta?.title) : '' }}</span>
+      <span class="truncate w-full">{{ data.meta?.title ? $t(data.meta?.title) : '' }}</span>
     </el-menu-item>
   </template>
 </template>
@@ -28,7 +28,7 @@ interface MenuItemProps {
 defineProps<MenuItemProps>()
 const { getIndex } = useMenu()
 
-const iconProps =inject<IconOptions>('iconProps')
+const iconProps = inject<IconOptions>('iconProps')
 
 </script>
 

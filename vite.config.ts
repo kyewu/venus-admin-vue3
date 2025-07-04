@@ -56,7 +56,6 @@ export default defineConfig({
     }),
     VueI18nPlugin({
       include: [path.resolve(process.cwd(), 'locales/**')],
-      dropMessageCompiler: true,
       compositionOnly: true, // change the default language is forbidden
     }),
     VitePWA(),

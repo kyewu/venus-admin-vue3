@@ -1,11 +1,17 @@
 <template>
-  <el-row class="items-center px-4">
-    <Iconify :icon="collapse ? 'ep:fold' : 'ep:expand'" class="text-2xl cursor-pointer" @click="collapseModel = !collapseModel"></Iconify>
-    <div class="flex-grow overflow-hidden">
+  <el-row :class="['flex items-center flex-nowrap! h-[50px] z-100 bg-white dark:bg-dark']">
+    <Iconify
+      :icon="collapseModel ? 'ep:expand' : 'ep:fold'"
+      class="ml-2 text-2xl cursor-pointer"
+      @click="collapseModel = !collapseModel"
+      v-if="settings?.mode !== 'top'"
+      v-show="showCollapse"
+    ></Iconify>
+    <div class="relative w-full overflow-x-hidden">
       <slot></slot>
     </div>
-    <el-row class="items-center">
-      <ThemeSettings @change="handleThemeChange"></ThemeSettings>
+    <el-row class="items-center flex-nowrap!">
+      <ThemeSettings v-bind="settings" @change="handleThemeChange"></ThemeSettings>
       <DarkModeToggle class="mr-2" :dark="settings?.darkMode" @change="handleDarkChange"></DarkModeToggle>
       <ChangeLocale class="mr-2" :locales="locales" @change="handleLocalesChange"></ChangeLocale>
       <FullScreen></FullScreen>
@@ -28,6 +34,7 @@ import { loadLocaleMessages } from '@/modules/i8n';
 
 const props = withDefaults(defineProps<HeaderProps>(), {
   collapse: false,
+  showCollapse: true
 })
 const collapseModel = defineModel<boolean>('collapse', { default: false })
 const localSettings = reactive({ ...props })

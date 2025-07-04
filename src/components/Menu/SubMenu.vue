@@ -1,13 +1,18 @@
 <template>
   <template v-if="!data.children?.length">
-    <MenuItem :data="data" :collapse="collapse"></MenuItem>
+    <MenuItem :data="data" :collapse="collapse">
+    </MenuItem>
   </template>
   <template v-else>
     <el-sub-menu :index="getIndex(data)">
-      <template v-if="!data.meta?.icon" #title>{{ data.meta?.title ? $t(data.meta?.title) : '' }}</template>
+      <template v-if="!data.meta?.icon" #title>
+        <span class="truncate w-full">
+          {{ data.meta?.title ? $t(data.meta?.title) : '' }}
+        </span>
+      </template>
       <template v-else #title>
         <Iconify :icon="data.meta?.icon" :style="iconProps?.style" :class="iconProps?.class"></Iconify>
-        <span>{{ data.meta?.title ? $t(data.meta?.title) : '' }}</span>
+        <span class="truncate w-full">{{ data.meta?.title ? $t(data.meta?.title) : '' }}</span>
       </template>
       <SubMenu v-for="(child, index) in data.children" :key="`${data.path}/${index}`" :data="child" v-bind="subAttrs">
       </SubMenu>
@@ -35,8 +40,7 @@ const subAttrs = computed(() => {
   return rest
 })
 
-const iconProps =inject<IconOptions>('iconProps')
+const iconProps = inject<IconOptions>('iconProps')
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

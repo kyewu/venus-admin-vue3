@@ -1,26 +1,30 @@
 <template>
-  <div class="w-full h-screen overflow-hidden flex flex-nowrap flex-row">
-    <div v-if="settings.settings?.mode !== 'top'" :style="{ width: mixMenuWidth, backgroundColor: menuBgColor }" class="h-full">
-      <el-row class="h-full flex-col">
-        <el-scrollbar v-if="settings.settings?.mode !== 'mix'" :class="[settings.settings?.mode !== 'mixbar' ? 'flex-1' : 'w-[64px]']" :height="'h-full'"
-          :style="{ backgroundColor: settings.settings?.mode === 'mixbar' ? darken(menuBgColor, 0.1) : menuBgColor }"
+  <div class="w-full h-screen overflow-hidden flex">
+    <div v-if="settings.settings?.mode !== 'top'" :style="{ width: mixMenuWidth, backgroundColor: menuBgColor }"
+      class="h-full">
+      <el-row class="h-full">
+        <el-scrollbar v-if="settings.settings?.mode !== 'mix'"
+          :class="[settings.settings?.mode !== 'mixbar' ? 'flex-1' : 'w-[64px]']" :height="'h-full'"
+          :style="{ backgroundColor: settings.settings?.mode === 'mixbar' ? darken(menuBgColor, 0.2) : menuBgColor }"
           view-class="h-full">
           <Menu :class="['h-full', { 'mixbar': settings.settings?.mode === 'mixbar' }]" :data="mixMenus" :mode="mode"
             :collapse="settings.settings?.mode !== 'mixbar' && collapse" text-color="#b8b8b8"
-            :background-color="settings.settings?.mode === 'mixbar' ? 'transparent' : menuBgColor"></Menu>
+            :background-color="settings.settings?.mode === 'mixbar' ? 'transparent' : menuBgColor"
+            @select="handleSelect"></Menu>
         </el-scrollbar>
         <el-scrollbar v-if="settings.settings?.mode === 'mixbar' || settings.settings?.mode === 'mix'"
-          :height="'h-full'" view-class="h-full">
+          class="flex-1" view-class="h-full">
           <Menu :data="subMenus" :mode="mode" :collapse="collapse" text-color="#b8b8b8" class="h-full"
-            :background-color="darken(menuBgColor, 0.1)"></Menu>
+            :background-color="settings.settings?.backgroundColor" @select="handleSelect"></Menu>
         </el-scrollbar>
       </el-row>
     </div>
     <div class="content flex-1">
-      <Header :locales="locales" :username="username" :src="avatar" :data="avatarMenu" v-model:collapse="collapse"
+      <Header :locales="locales" :show-collapse="settings.settings?.mode !== 'top'" :username="username" :src="avatar" :data="avatarMenu" v-model:collapse="collapse"
         @themeSettingsChange="handleThemeChange">
         <Menu v-if="settings.settings?.mode === 'top' || settings.settings?.mode === 'mix'" :data="headerMenus"
-          mode="horizontal" :collapse="collapse" class="h-full" :background-color="menuBgColor"></Menu>
+          mode="horizontal" :collapse="collapse" class="h-full" :background-color="menuBgColor" @select="handleSelect">
+        </Menu>
       </Header>
       <router-view></router-view>
     </div>
@@ -51,6 +55,7 @@ const settings = reactive<ThemeSettingOptions>({
   avatar: '',
   avatarMenu: [],
   username: 'Kye',
+  showCollapse: true,
   locales: [
     {
       text: '中文',
@@ -112,7 +117,10 @@ const handleThemeChange = (themeSettings: ThemeSettingsProps): void => {
 }
 
 const menuBgColor = computed(() => {
-  return settings.settings ? settings.settings.backgroundColor : 'var(--el-menu-bg-color)'
+  if(settings.settings) {
+    return settings.settings.backgroundColor
+  }
+  return 'var(--el-menu-bg-color)'
 })
 
 const menuWidth = computed(() => {
@@ -125,10 +133,20 @@ const isFullIcons = computed(() => {
 
 const mixMenuWidth = computed(() => {
   if (settings.settings?.mode === 'mixbar' && isFullIcons.value) {
-    return settings?.collapse ? 'auto' : menuWidth.value
+    return settings?.collapse ? 'auto' : menuWidth.value! + 64 + 'px'
+  }
+  if(settings.settings?.mode === 'mixbar' && settings?.collapse) {
+    return 128 + 'px'
   }
   return settings?.collapse ? '64px' : menuWidth.value + 'px'
 })
+
+const router = useRouter()
+const handleSelect = (item: AppRouteMenuItem) => {
+  if(item.name) {
+    router.push(item.name as string)
+  }
+}
 
 </script>
 
@@ -142,7 +160,9 @@ const mixMenuWidth = computed(() => {
     flex-direction: column;
     margin-bottom: 15px;
     padding: 4px 0 !important;
-
+    span{
+      text-align: center;
+    }
     svg {
       margin-right: 0;
       margin-bottom: 10px;

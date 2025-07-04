@@ -7,3 +7,7 @@
 .el-menu--horizontal.el-menu {
   border-bottom: none!important;
 }
+
+html.dark {
+  --el-menu-bg-color: #000
+}
