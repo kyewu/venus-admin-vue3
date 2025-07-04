@@ -9,7 +9,7 @@ meta:
 <script lang="ts" setup>
 definePage({
   meta: {
-    title: '404',
+    title: 'pages.404',
     hidden: true,
   }
 })

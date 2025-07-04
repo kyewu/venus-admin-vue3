@@ -7,7 +7,7 @@ import { useRegisterSW } from 'virtual:pwa-register/vue'
 
 definePage({
   meta: {
-    title: 'Home',
+    title: 'pages.home',
     icon: 'ep:home-filled',
   }
 })

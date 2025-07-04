@@ -1,23 +1,52 @@
-import type { App } from 'vue'
-import { createI18n, type Locale } from 'vue-i18n'
+// import type { App } from 'vue'
+import { createI18n } from 'vue-i18n'
+// 'zh-cn': () => import('element-plus/dist/locale/zh-cn.mjs'),
+// en: () => import('element-plus/dist/locale/en.mjs')
+import zhCN from 'element-plus/dist/locale/zh-cn.min.mjs'
+import en from 'element-plus/dist/locale/en.min.mjs'
+// import localzhCN from '../../locales/zh-cn.json'
+// import localen from '../../locales/en.json'
+// import localzhCN from 'el-admin-components/locales/zh-cn.json'
+// import localen from 'el-admin-components/locales/en.json'
+import { defu } from 'defu'
 
-const i18n = createI18n({
+export const i18n = createI18n({
   legacy: false,
   locale: '',
   messages: {}
 })
 
-// { en: import('/locales/en.ts'), zh-CN: import('/locales/zh-CN.ts') }
-const localesMap = Object.fromEntries(
-  Object.entries(import.meta.glob('../../locales/*.ts'))
-    .map(([path, loadLocale]) => [path.match(/([\w-]*)\.ts$/)?.[1], loadLocale]),
-) as Record<Locale, () => Promise<{ default: Record<string, string> }>>
-
-export const availableLocales = Object.keys(localesMap)
+export const $t: typeof i18n.global.t = i18n.global.t
 
 const loadedLanguages: string[] = []
+let localesMap = {
+  // 'zh-cn': localzhCN,
+  // en: localen
+} as Record<string, any>
+let elementPlusLocalesMap = {} as Record<string, any>
 
-export const $t: typeof i18n.global.t = i18n.global.t
+export const localesMapLoader = (newLocalesMap = {}) => {
+  const base = import.meta.env.BASE_URL
+
+  const originLocale = {
+    'zh-cn': () => fetch(`${base}locales/zh-cn.json`).then((res) => res.json()),
+    en: () => fetch(`${base}locales/en.json`).then((res) => res.json()),
+    ...localesMap
+  }
+
+  localesMap = defu(newLocalesMap, originLocale)
+}
+
+export const epLocaleLoader = (newEPLocalesMap: any = {}) => {
+  const origin = {
+    'zh-cn': zhCN,
+    en,
+    ...elementPlusLocalesMap
+  }
+  elementPlusLocalesMap = { ...origin, ...newEPLocalesMap }
+}
+
+export const availableLocales = Object.keys(localesMap)
 
 export function setI18nLanguage(locale: string) {
   i18n.global.locale.value = locale
@@ -26,31 +55,42 @@ export function setI18nLanguage(locale: string) {
   }
 }
 
-/**
- * NOTE:
- * If you need to specify the language setting for headers, such as the `fetch` API, set it here.
- * The following is an example for axios.
- *
- * axios.defaults.headers.common['Accept-Language'] = locale
- */
-
-
-export async function loadLocaleMessages(lang: string) {
-  if(i18n.global.locale.value === lang || loadedLanguages.includes(lang)) {
+export async function loadLocaleMessages(l: string) {
+  const lang = l.toLowerCase()
+  // 如果已经被i18n插件进行加载的，则直接设置i18n.locale
+  if (i18n.global.locale.value === lang || loadedLanguages.includes(lang)) {
     return setI18nLanguage(lang)
   }
-  // load locale messages with dynamic import
-  const messages = await localesMap[lang]()
-
-  // set locale and locale message
-  i18n.global.setLocaleMessage(lang, messages.default)
-  loadedLanguages.push(lang)
-  return setI18nLanguage(lang)
-}
-
-export default {
-  install(app: App) {
-    app.use(i18n)
-    loadLocaleMessages('zh-CN')
+  if (localesMap && localesMap[lang]) {
+    const messages =
+      typeof localesMap[lang] === 'function' ? await localesMap[lang]() : localesMap[lang]
+    const messagesEP = await elementPlusLocalesMap[lang]
+    // set locale and locale message
+    i18n.global.setLocaleMessage(lang, {
+      ...messagesEP,
+      ...messages
+    })
+    loadedLanguages.push(lang)
+    return setI18nLanguage(lang)
+  } else {
+    setTimeout(() => {
+      initLocales()
+    }, 1000)
   }
 }
+
+async function initLocales() {
+  localesMapLoader()
+  epLocaleLoader()
+  await loadLocaleMessages('zh-CN')
+}
+
+// app.use(I18nModule.i18nPlugin)
+export const i18nPlugin = {
+  install(app: any) {
+    app.use(i18n)
+    initLocales()
+  }
+}
+
+export default i18nPlugin

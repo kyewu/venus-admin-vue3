@@ -5,7 +5,7 @@
 <script setup lang="ts">
 definePage({
   meta: {
-    title: 'Icon',
+    title: 'pages.icon',
   }
 })
 </script>

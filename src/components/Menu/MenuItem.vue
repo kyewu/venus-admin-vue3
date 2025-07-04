@@ -5,12 +5,12 @@
     <el-menu-item v-if="collapse" :index="getIndex(data)" :disabled="data.meta?.disabled">
       <Iconify :icon="data.meta?.icon" :style="iconProps?.style" :class="iconProps?.class"></Iconify>
       <template #title>
-        {{ data.meta?.title }}
+        {{ data.meta?.title ? $t(data.meta?.title) : '' }}
       </template>
     </el-menu-item>
     <el-menu-item v-else :index="getIndex(data)" :disabled="data.meta?.disabled">
       <Iconify :icon="data.meta?.icon" :style="iconProps?.style" :class="iconProps?.class"></Iconify>
-      <span>{{ data.meta?.title }}</span>
+      <span>{{ data.meta?.title ? $t(data.meta?.title) : '' }}</span>
     </el-menu-item>
   </template>
 </template>

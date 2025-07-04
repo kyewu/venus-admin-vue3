@@ -21,7 +21,6 @@
         @themeSettingsChange="handleThemeChange">
         <Menu v-if="settings.settings?.mode === 'top' || settings.settings?.mode === 'mix'" :data="headerMenus"
           mode="horizontal" :collapse="collapse" class="h-full" :background-color="menuBgColor"></Menu>
-          {{ $t('hello') }}
       </Header>
       <router-view></router-view>
     </div>

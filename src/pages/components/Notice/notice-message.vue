@@ -8,7 +8,7 @@ import type { NoticeMessageListProps } from '@/components/Notice/types';
 
 definePage({
   meta: {
-    title: 'Notice',
+    title: 'components.notice-message',
     icon: 'ep:bell',
   }
 })

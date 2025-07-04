@@ -1,0 +1,14 @@
+{
+  "hello": "你好",
+  "components": {
+    "ep-icon": "图标列表",
+    "notice-message": "通知消息"
+  },
+  "pages": {
+    "home": "主页",
+    "components": "组件",
+    "about": "关于",
+    "notice": "通知",
+    "icon": "图标"
+  }
+}

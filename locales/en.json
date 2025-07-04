@@ -1,0 +1,14 @@
+{
+  "hello": "Hello",
+  "components": {
+    "ep-icon": "Icon List",
+    "notice-message": "Notification message"
+  },
+  "pages": {
+    "home": "Home",
+    "about": "about",
+    "components": "Components",
+    "icon": "icon",
+    "notice": "notify"
+  }
+}

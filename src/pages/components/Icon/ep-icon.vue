@@ -7,7 +7,7 @@
 import IconList from '@/components/Icon/IconList.vue'
 definePage({
   meta: {
-    title: 'Icon',
+    title: 'components.ep-icon',
     icon: 'ep:picture-filled',
   }
 })

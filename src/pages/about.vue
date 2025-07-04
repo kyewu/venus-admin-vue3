@@ -7,7 +7,7 @@
 <script setup lang="ts">
 definePage({
   meta: {
-    title: 'About Us',
+    title: 'pages.about',
     icon: 'ep:info-filled',
   }
 })
