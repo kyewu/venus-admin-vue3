@@ -25,3 +25,10 @@ export interface IconOptions {
   style: CSSProperties
   class: string
 }
+
+export interface DropDownProps<T> {
+  items: T[]
+  iconProps?: Partial<IconProps>
+  iconClass?: string
+  // current?: number
+}

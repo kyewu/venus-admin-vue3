@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import IconList from '../Icon/IconList.vue'
+import IconList from '@/components/Icon/IconList.vue'
 definePage({
   meta: {
     title: 'Icon',

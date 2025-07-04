@@ -1,41 +1,41 @@
 <template>
-
-  <el-dropdown trigger="click" @command="changeLocale">
-    <slot name="trigger">
-      <span class="el-dropdown-link">
-        <Iconify :icon="`ion:language`" class="text-xl"></Iconify>
-      </span>
-    </slot>
-    <template #dropdown>
-      <el-dropdown-menu>
-        <el-dropdown-item v-for="(locale, index) in locales" :key="index" :command="locale.name">
-          <Iconify v-if="locale.icon" :icon="locale.icon" class="mr-2 text-xl"></Iconify>
-          {{ locale.text }}
-        </el-dropdown-item>
-      </el-dropdown-menu>
+  <Dropdown :items="locales" @change="changeLocale" :icon-class="iconClass" :icon-props="iconPropsComputed"
+    v-model="current">
+    <template #header>
+      <Iconify :icon="`ion:language`" :class="iconClass"></Iconify>
     </template>
-  </el-dropdown>
+    <template #item="{ item }">
+      {{ item.text }}
+    </template>
+  </Dropdown>
 </template>
 
 <script setup lang="tsx">
 
 import Iconify from '../Icon/Iconify.vue';
-import type { ChangeLocaleProps } from './types';
+import type { ChangeLocaleProps, LocaleItem } from './types';
 
+const props = withDefaults(defineProps<ChangeLocaleProps>(), {
+  iconClass: 'text-xl',
+  iconProps: {}
+})
 
+const emit = defineEmits<{
+  change: [command: string]
+}>()
 
-defineProps<ChangeLocaleProps>()
+const current = ref(0)
 
-const changeLocale = (name: string) => {
-  console.log(name)
+const iconPropsComputed = computed(() => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { locales, icon, ...restProps } = props
+  return restProps
+})
+
+const changeLocale = (command: LocaleItem, index: number) => {
+  current.value = index
+  emit('change', command.name)
 }
-
-// const dropdownItemIcon = (icon?: IconifyIcon | string) => {
-//   if(!icon) return () => {}
-//   return () => {
-//     return <Iconify icon={icon}></Iconify>
-//   }
-// }
 </script>
 
 <style scoped></style>

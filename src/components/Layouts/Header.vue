@@ -7,7 +7,7 @@
     <el-row class="items-center">
       <ThemeSettings @change="handleThemeChange"></ThemeSettings>
       <DarkModeToggle class="mr-2" :dark="settings?.darkMode" @change="handleDarkChange"></DarkModeToggle>
-      <ChangeLocale class="mr-2" :locales="locales"></ChangeLocale>
+      <ChangeLocale class="mr-2" :locales="locales" @change="handleLocalesChange"></ChangeLocale>
       <FullScreen></FullScreen>
       <el-divider direction="vertical" />
       <AvatarMenu v-if="src || username" v-bind="avatarProps" @command="handleCommand"></AvatarMenu>
@@ -24,6 +24,7 @@ import ChangeLocale from '../Themes/ChangeLocale.vue';
 import ThemeSettings from '../Themes/ThemeSettings.vue';
 import type { HeaderProps } from './types';
 import type { ThemeSettingsProps } from '../Themes/types';
+import { loadLocaleMessages } from '@/modules/i8n';
 
 const props = withDefaults(defineProps<HeaderProps>(), {
   collapse: false,
@@ -59,6 +60,10 @@ const handleDarkChange = (darkMode: boolean) => {
   if (localSettings.settings) {
     localSettings.settings.darkMode = darkMode
   }
+}
+
+const handleLocalesChange = (locales: string) => {
+  loadLocaleMessages(locales)
 }
 </script>
 
