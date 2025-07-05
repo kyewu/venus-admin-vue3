@@ -7,7 +7,7 @@
       v-if="settings?.mode !== 'top'"
       v-show="showCollapse"
     ></Iconify>
-    <div class="relative w-full overflow-x-hidden">
+    <div class="relative flex-grow overflow-x-hidden">
       <slot></slot>
     </div>
     <el-row class="items-center flex-nowrap!">

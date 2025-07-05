@@ -9,6 +9,14 @@
     "about": "about",
     "components": "Components",
     "icon": "icon",
-    "notice": "notify"
+    "notice": "notify",
+    "login": {
+      "login": "Log in",
+      "password": "Password",
+      "register": "Sign Up",
+      "remember": "Remember me",
+      "repassword": "Confirm Password Again",
+      "username": "Username"
+    }
   }
 }

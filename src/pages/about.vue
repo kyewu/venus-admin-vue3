@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    About
   </div>
 </template>
 
@@ -13,6 +13,4 @@ definePage({
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-screen overflow-hidden flex">
     <div v-if="settings.settings?.mode !== 'top'" :style="{ width: mixMenuWidth, backgroundColor: menuBgColor }"
-      class="h-full">
+      class="h-full shrink-0">
       <el-row class="h-full">
         <el-scrollbar v-if="settings.settings?.mode !== 'mix'"
           :class="[settings.settings?.mode !== 'mixbar' ? 'flex-1' : 'w-[64px]']" :height="'h-full'"
@@ -85,6 +85,7 @@ const mixMenus = computed(() => {
 })
 
 const subMenus = computed(() => {
+  console.log('subMenus:', getSubMenus(menus.value))
   return getSubMenus(menus.value)
 })
 
@@ -147,6 +148,16 @@ const handleSelect = (item: AppRouteMenuItem) => {
     router.push(item.name as string)
   }
 }
+
+useResizeObserver(document.body, (entries) => {
+  const { width } = entries[0].contentRect
+  if(width < 640) {
+    settings.collapse = true
+  }
+  if(width > 1200) {
+    settings.collapse = false
+  }
+})
 
 </script>
 

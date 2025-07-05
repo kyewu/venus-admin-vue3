@@ -1,6 +1,6 @@
 <template>
   <Iconify icon="ri:brush-2-line" class="text-xl mr-3 cursor-pointer" @click="drawer = true"></Iconify>
-  <el-drawer v-model="drawer" title="Theme Settings" @close="handleClose">
+  <el-drawer class="lt-sm:w-full!" v-model="drawer" title="Theme Settings" @close="handleClose">
     <el-form :form="form">
       <el-form-item label="Theme Color">
         <el-color-picker v-model="form.theme"></el-color-picker>

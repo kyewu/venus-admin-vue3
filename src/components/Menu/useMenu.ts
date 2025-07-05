@@ -50,6 +50,9 @@ export function useMenu() {
 
   function getSubMenus(menus: AppRouteMenuItem[]) {
     const route = useRoute()
+    if(!route) {
+      return []
+    }
     const path = computed(() => {
       if(route.path === '/') return '/'
       const rootPath = route.path.split('/')[1]

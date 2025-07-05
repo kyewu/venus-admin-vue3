@@ -6,13 +6,13 @@
   <template v-else>
     <el-sub-menu :index="getIndex(data)">
       <template v-if="!data.meta?.icon" #title>
-        <span class="truncate w-full">
+        <div class="">
           {{ data.meta?.title ? $t(data.meta?.title) : '' }}
-        </span>
+        </div>
       </template>
       <template v-else #title>
         <Iconify :icon="data.meta?.icon" :style="iconProps?.style" :class="iconProps?.class"></Iconify>
-        <span class="truncate w-full">{{ data.meta?.title ? $t(data.meta?.title) : '' }}</span>
+        <div class="">{{ data.meta?.title ? $t(data.meta?.title) : '' }}</div>
       </template>
       <SubMenu v-for="(child, index) in data.children" :key="`${data.path}/${index}`" :data="child" v-bind="subAttrs">
       </SubMenu>

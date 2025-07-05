@@ -9,6 +9,14 @@
     "components": "组件",
     "about": "关于",
     "notice": "通知",
-    "icon": "图标"
+    "icon": "图标",
+    "login": {
+      "username": "用户名",
+      "password": "密码",
+      "repassword": "再次确认密码",
+      "remember": "记住我",
+      "login": "登录",
+      "register": "注册账号"
+    }
   }
 }
