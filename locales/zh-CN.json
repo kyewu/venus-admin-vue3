@@ -2,7 +2,8 @@
   "hello": "你好",
   "components": {
     "ep-icon": "图标列表",
-    "notice-message": "通知消息"
+    "notice-message": "通知消息",
+    "basic-table": "基础组件"
   },
   "pages": {
     "home": "主页",
@@ -10,6 +11,7 @@
     "about": "关于",
     "notice": "通知",
     "icon": "图标",
+    "table": "表格",
     "login": {
       "username": "用户名",
       "password": "密码",

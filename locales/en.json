@@ -2,7 +2,8 @@
   "hello": "Hello",
   "components": {
     "ep-icon": "Icon List",
-    "notice-message": "Notification message"
+    "notice-message": "Notification message",
+    "basic-table": "Basic Table"
   },
   "pages": {
     "home": "Home",
@@ -10,6 +11,7 @@
     "components": "Components",
     "icon": "icon",
     "notice": "notify",
+    "table": "Table",
     "login": {
       "login": "Log in",
       "password": "Password",
