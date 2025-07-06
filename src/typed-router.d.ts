@@ -29,6 +29,7 @@ declare module 'vue-router/auto-routes' {
     '/components/table': RouteRecordInfo<'/components/table', '/components/table', Record<never, never>, Record<never, never>>,
     '/components/table/': RouteRecordInfo<'/components/table/', '/components/table', Record<never, never>, Record<never, never>>,
     '/components/table/complex': RouteRecordInfo<'/components/table/complex', '/components/table/complex', Record<never, never>, Record<never, never>>,
+    '/components/table/components/Popover': RouteRecordInfo<'/components/table/components/Popover', '/components/table/components/Popover', Record<never, never>, Record<never, never>>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
   }
 }
