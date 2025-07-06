@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-screen overflow-hidden flex">
+  <div class="position-absolute left-0 top-0 w-full h-full overflow-hidden flex">
     <div v-if="settings.settings?.mode !== 'top'" :style="{ width: mixMenuWidth, backgroundColor: menuBgColor }"
       class="h-full shrink-0">
       <el-row class="h-full">
@@ -19,14 +19,16 @@
         </el-scrollbar>
       </el-row>
     </div>
-    <div class="content flex-1">
+    <div class="content w-full h-full flex-1 overflow-hidden">
       <Header :locales="locales" :show-collapse="settings.settings?.mode !== 'top'" :username="username" :src="avatar" :data="avatarMenu" v-model:collapse="collapse"
         @themeSettingsChange="handleThemeChange">
         <Menu v-if="settings.settings?.mode === 'top' || settings.settings?.mode === 'mix'" :data="headerMenus"
           mode="horizontal" :collapse="collapse" class="h-full" :background-color="menuBgColor" @select="handleSelect">
         </Menu>
       </Header>
-      <router-view></router-view>
+      <div class="overflow-y-auto h-full">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>

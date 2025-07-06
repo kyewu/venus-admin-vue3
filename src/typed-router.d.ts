@@ -28,6 +28,7 @@ declare module 'vue-router/auto-routes' {
     '/components/notice/notice-message': RouteRecordInfo<'/components/notice/notice-message', '/components/notice/notice-message', Record<never, never>, Record<never, never>>,
     '/components/table': RouteRecordInfo<'/components/table', '/components/table', Record<never, never>, Record<never, never>>,
     '/components/table/': RouteRecordInfo<'/components/table/', '/components/table', Record<never, never>, Record<never, never>>,
+    '/components/table/complex': RouteRecordInfo<'/components/table/complex', '/components/table/complex', Record<never, never>, Record<never, never>>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
   }
 }

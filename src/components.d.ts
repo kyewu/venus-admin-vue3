@@ -63,5 +63,6 @@ declare module 'vue' {
     Table: typeof import('./components/Table/Table.vue')['default']
     ThemeSettings: typeof import('./components/Themes/ThemeSettings.vue')['default']
     VTable: typeof import('./components/Table/VTable.vue')['default']
+    VTableColumn: typeof import('./components/Table/VTableColumn.vue')['default']
   }
 }

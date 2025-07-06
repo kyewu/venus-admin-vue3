@@ -3,7 +3,8 @@
   "components": {
     "ep-icon": "Icon List",
     "notice-message": "Notification message",
-    "basic-table": "Basic Table"
+    "basic-table": "Basic Table",
+    "complex-table": "Complex Table"
   },
   "pages": {
     "home": "Home",

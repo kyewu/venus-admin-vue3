@@ -3,7 +3,8 @@
   "components": {
     "ep-icon": "图标列表",
     "notice-message": "通知消息",
-    "basic-table": "基础组件"
+    "basic-table": "基础表格",
+    "complex-table": "复杂表格"
   },
   "pages": {
     "home": "主页",

@@ -1,6 +1,17 @@
 import { defineConfig, presetIcons, transformerDirectives, transformerVariantGroup } from 'unocss'
 import presetWind4 from '@unocss/preset-wind4'
 export default defineConfig({
+  rules: [
+    [
+      'm-safe',
+      {
+        'margin-left': 'env(safe-area-inset-left)',
+        'margin-right': 'env(safe-area-inset-right)',
+        'margin-bottom': 'env(safe-area-inset-bottom)',
+        'margin-top': 'env(safe-area-inset-top)'
+      },
+    ]
+  ],
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
