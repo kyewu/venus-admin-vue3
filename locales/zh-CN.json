@@ -4,7 +4,8 @@
     "ep-icon": "图标列表",
     "notice-message": "通知消息",
     "basic-table": "基础表格",
-    "complex-table": "复杂表格"
+    "complex-table": "复杂表格",
+    "high-table": "高级表格"
   },
   "pages": {
     "home": "主页",

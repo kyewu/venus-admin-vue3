@@ -4,7 +4,8 @@
     "ep-icon": "Icon List",
     "notice-message": "Notification message",
     "basic-table": "Basic Table",
-    "complex-table": "Complex Table"
+    "complex-table": "Complex Table",
+    "high-table": "High Table"
   },
   "pages": {
     "home": "Home",

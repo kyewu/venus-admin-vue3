@@ -9,12 +9,14 @@ export interface TableColumnType extends Partial<TableColumnCtx<any>> {
 }
 interface PaginationType extends Partial<PaginationProps> {
   align?: 'left' | 'center' | 'right',
-  total?: number
+  total?: number,
+  defaultSlot?: typeof Component
 }
 
 export interface VTableProps extends TableProps<any> {
   columns: Array<TableColumnType>
   pagination?: PaginationType
+  adaptiveHeight?: boolean | number
 }
 
 export type TableEventsType = {
@@ -38,3 +40,15 @@ export type TableEventsType = {
   'expand-change': [row: any, expandedRows: any]
   scroll: ({ scrollLeft: number, scrollTop: number }) => void
 }
+
+type PaginationCallFunc = (value: number) => void
+
+export type PaginationEventsType = {
+  'page-current-change': [PaginationCallFunc]
+  'page-size-change': [PaginationCallFunc]
+  'page-prev-click': [PaginationCallFunc]
+  'page-next-click': [PaginationCallFunc]
+  change: [(currentPage: number, pageSize: number) => void]
+}
+
+export type TableEmitsType = TableEventsType & PaginationEventsType

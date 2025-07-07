@@ -33,6 +33,12 @@
       <template v-if="tab.name === 'customColumnHeaderTpl'">
         <VTable :columns="customColHeaders" :data="customColHeaderData" :pagination="pagination"></VTable>
       </template>
+      <template v-if="tab.name === 'expandRow'">
+        <VTable :columns="expandColumns" :data="expandTableData" :pagination="pagination"></VTable>
+      </template>
+      <template v-if="tab.name === 'tree'">
+        <VTable :data="treeTableData" :columns="treeTableColumns" default-expand-all row-key="id" :tree-props="treeProps"></VTable>
+      </template>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -41,6 +47,7 @@
 import type { PaginationType, TableColumnType } from '@/components/Table/types';
 import type { TableInstance } from 'element-plus';
 import Popover from './components/Popover.vue';
+import VTable from '@/components/Table/VTable.vue';
 
 definePage({
   meta: {
@@ -78,7 +85,15 @@ const tabs = reactive([
   {
     label: '自定义表头',
     name: 'customColumnHeaderTpl',
-  }
+  },
+  {
+    label: '展开行',
+    name: 'expandRow',
+  },
+  {
+    label: '树形',
+    name: 'tree',
+  },
 ])
 
 const nestedTableColumns = ref<TableColumnType[]>([
@@ -116,7 +131,7 @@ const nestedTableColumns = ref<TableColumnType[]>([
       }
     ]
   }
-])
+] as TableColumnType[])
 
 const nestedTableData = ref([
   {
@@ -275,6 +290,276 @@ const filterData = ref([
   },
 ])
 
+const childColumns = ref<TableColumnType[]>([
+  {
+    prop: 'name',
+    label: 'Name'
+  },
+  {
+    prop: 'state',
+    label: 'State'
+  },
+  {
+    prop: 'city',
+    label: 'City'
+  },
+  {
+    prop: 'address',
+    label: 'Address'
+  },
+  {
+    prop: 'zip',
+    label: 'Zip'
+  }
+])
+
+const childComponent = (data) => (
+  <>
+    <v-table data={data} columns={childColumns.value}></v-table>
+  </>
+)
+
+const expandColumns = ref<TableColumnType[]>([
+  {
+    type: 'expand',
+    width: 50,
+    defaultSlot: ({ row }) => (
+      <div>
+        {childComponent(row.family)}
+      </div>
+    )
+
+  },
+  {
+    prop: 'date',
+    label: 'Date'
+  },
+  {
+    prop: 'name',
+    label: 'Name'
+  }
+])
+
+const expandTableData = ref([
+  {
+    date: '2016-05-03',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114',
+    family: [
+      {
+        name: 'Jerry',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Spike',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Tyke',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+    ],
+  },
+  {
+    date: '2016-05-02',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114',
+    family: [
+      {
+        name: 'Jerry',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Spike',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Tyke',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+    ],
+  },
+  {
+    date: '2016-05-04',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114',
+    family: [
+      {
+        name: 'Jerry',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Spike',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Tyke',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+    ],
+  },
+  {
+    date: '2016-05-01',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114',
+    family: [
+      {
+        name: 'Jerry',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Spike',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Tyke',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+    ],
+  },
+  {
+    date: '2016-05-08',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114',
+    family: [
+      {
+        name: 'Jerry',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Spike',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Tyke',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+    ],
+  },
+  {
+    date: '2016-05-06',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114',
+    family: [
+      {
+        name: 'Jerry',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Spike',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Tyke',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+    ],
+  },
+  {
+    date: '2016-05-07',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114',
+    family: [
+      {
+        name: 'Jerry',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Spike',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+      {
+        name: 'Tyke',
+        state: 'California',
+        city: 'San Francisco',
+        address: '3650 21st St, San Francisco',
+        zip: 'CA 94114',
+      },
+    ],
+  },
+])
+
 const multipleTableRef = ref<TableInstance>()
 const multipleSelection = ref<any[]>([])
 
@@ -362,7 +647,6 @@ const customColHeaders = ref([
   {
     prop: 'city',
     label: 'City',
-    sortable: true,
     headerSlot: () => {
       return (
         <div class="flex items-center">
@@ -374,6 +658,72 @@ const customColHeaders = ref([
 ])
 const customColHeaderData = computed(() => {
   return nestedTableData.value.filter((data) => !search.value || data.name.toLowerCase().includes(search.value.toLowerCase()))
+})
+
+// tree
+const treeTableData = [
+  {
+    id: 1,
+    date: '2016-05-02',
+    name: 'wangxiaohu',
+    address: 'No. 189, Grove St, Los Angeles'
+  },
+  {
+    id: 2,
+    date: '2016-05-04',
+    name: 'wangxiaohu',
+    address: 'No. 189, Grove St, Los Angeles'
+  },
+  {
+    id: 3,
+    date: '2016-05-01',
+    name: 'wangxiaohu',
+    address: 'No. 189, Grove St, Los Angeles',
+    children: [
+      {
+        id: 31,
+        date: '2016-05-01',
+        name: 'wangxiaohu',
+        address: 'No. 189, Grove St, Los Angeles'
+      },
+      {
+        id: 32,
+        date: '2016-05-01',
+        name: 'wangxiaohu',
+        address: 'No. 189, Grove St, Los Angeles'
+      }
+    ]
+  },
+  {
+    id: 4,
+    date: '2016-05-03',
+    name: 'wangxiaohu',
+    address: 'No. 189, Grove St, Los Angeles'
+  }
+]
+
+const treeTableColumns = [
+  {
+    type: 'selection',
+    width: 55
+  },
+  {
+    prop: 'date',
+    label: 'Date',
+    selectable: () =>true
+  },
+  {
+    prop: 'name',
+    label: 'Name'
+  },
+  {
+    prop: 'address',
+    label: 'Address'
+  }
+] as TableColumnType[]
+
+const treeProps = reactive({
+  checkStrictly: false,
 })
 </script>
 

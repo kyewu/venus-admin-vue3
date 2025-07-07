@@ -1,5 +1,6 @@
 <template>
-  <VTable :columns="columns" :data="data" :pagination="pagination" @row-click="onRowClick">
+  <VTable :columns="columns" :data="data" :pagination="pagination" @row-click="onRowClick" @page-change="onPageChange"
+    @page-current-change="onPageChange" @page-next-click="onPageChange" @page-prev-click="onPageChange" @page-size-change="onPageChange">
     <template #append>
       <el-button class="mt-4" style="width: 100%" @click="onAddItem">
         Add Item
@@ -90,6 +91,10 @@ const onAddItem = () => {
 
 const onRowClick = (row: any, column: any, event: Event): void => {
   console.log('row click', row, column, event)
+}
+
+const onPageChange = (_): void => {
+  console.log('size change', _)
 }
 
 </script>

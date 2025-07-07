@@ -10,14 +10,21 @@
         <slot name="empty"></slot>
       </template>
     </el-table>
-    <div :class="['p-4 flex', paginationDir]" v-if="isDefined(pagination)">
-      <el-pagination layout="total, sizes, prev, pager, next, jumper" background :total="50" />
-    </div>
+    <slot name="footer">
+      <!-- default -->
+      <div :class="['p-4 flex', paginationDir]" v-if="isDefined(pagination)">
+        <el-pagination v-bind="pagination" v-on="pageEvents" layout="total, sizes, prev, pager, next, jumper" background :total="50">
+          <template #default="scope" v-if="pagination.defaultSlot">
+            <component :is="pagination.defaultSlot" v-bind="scope"></component>
+          </template>
+        </el-pagination>
+      </div>
+    </slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { TableEventsType, VTableProps } from './types';
+import type { TableEmitsType, VTableProps } from './types';
 import { isDefined } from '@vueuse/core';
 import VTableColumn from './VTableColumn.vue';
 import { exposeEventUtils, forwardEventUtils } from '@/utils';
@@ -44,10 +51,11 @@ const props = withDefaults(defineProps<Partial<VTableProps>>(), {
   pagination: () => ({
     align: 'center',
     total: 0
-  })
+  }),
+  adaptiveHeight: false
 })
 
-const emits = defineEmits<TableEventsType>()
+const emits = defineEmits<TableEmitsType>()
 const eventNames = [
   'select',
   'select-all',
@@ -68,7 +76,7 @@ const eventNames = [
   'expand-change',
   'scroll',
 ]
-
+const pageEventNames = ['current-change', 'size-change', 'prev-click', 'next-click', 'change']
 const exposeEvents = [
   'clearSelection',
   'getSelectionRows',
@@ -87,9 +95,15 @@ const exposeEvents = [
 
 const tableRef = ref()
 const events = forwardEventUtils(emits, eventNames)
+const pageEvents = forwardEventUtils(emits, pageEventNames, 'page-')
 const exposes = exposeEventUtils(tableRef, exposeEvents)
 defineExpose({ ...exposes })
 
+onMounted(() => {
+  if(props.adaptiveHeight) {
+    setAdaptiveHeight()
+  }
+})
 
 const paginationDir = computed(() => {
   let defaultClass = 'justify-center'
@@ -104,6 +118,21 @@ const paginationDir = computed(() => {
   }
   return defaultClass
 })
+
+async function setAdaptiveHeight() {
+  await nextTick()
+ if (props.adaptiveHeight) {
+  let offset = 50
+  if(typeof props.adaptiveHeight === 'number') {
+    offset = props.adaptiveHeight
+  }
+  const height = window.innerHeight - tableRef.value.$el.getBoundingClientRect().top - offset
+  tableRef.value.style.height = `${height}px`
+ }
+}
+
+const fn = useDebounceFn(setAdaptiveHeight, 100)
+useResizeObserver(tableRef, fn)
 </script>
 
 <style scoped lang="scss"></style>
