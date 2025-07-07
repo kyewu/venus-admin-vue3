@@ -46,7 +46,7 @@
 <script setup lang="tsx">
 import type { PaginationType, TableColumnType } from '@/components/Table/types';
 import type { TableInstance } from 'element-plus';
-import Popover from './components/Popover.vue';
+import Popover from './Popover.vue';
 import VTable from '@/components/Table/VTable.vue';
 
 definePage({

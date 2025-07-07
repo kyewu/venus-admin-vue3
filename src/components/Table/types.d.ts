@@ -17,6 +17,8 @@ export interface VTableProps extends TableProps<any> {
   columns: Array<TableColumnType>
   pagination?: PaginationType
   adaptiveHeight?: boolean | number
+  draggableCol?: boolean
+  draggableRow?: boolean
 }
 
 export type TableEventsType = {
@@ -51,4 +53,9 @@ export type PaginationEventsType = {
   change: [(currentPage: number, pageSize: number) => void]
 }
 
-export type TableEmitsType = TableEventsType & PaginationEventsType
+type TableExtendEvents = {
+  'drag-row-change': [row: any]
+  'drag-col-change': [col: any]
+}
+
+export type TableEmitsType = TableEventsType & PaginationEventsType & TableExtendEvents
