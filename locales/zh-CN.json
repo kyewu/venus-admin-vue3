@@ -5,7 +5,8 @@
     "notice-message": "通知消息",
     "basic-table": "基础表格",
     "complex-table": "复杂表格",
-    "high-table": "高级表格"
+    "high-table": "高级表格",
+    "form" : "表单"
   },
   "pages": {
     "home": "主页",
@@ -14,6 +15,7 @@
     "notice": "通知",
     "icon": "图标",
     "table": "表格",
+    "form" : "表单",
     "login": {
       "username": "用户名",
       "password": "密码",

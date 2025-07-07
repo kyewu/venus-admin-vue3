@@ -5,7 +5,8 @@
     "notice-message": "Notification message",
     "basic-table": "Basic Table",
     "complex-table": "Complex Table",
-    "high-table": "High Table"
+    "high-table": "High Table",
+    "form" : "Form"
   },
   "pages": {
     "home": "Home",
@@ -14,6 +15,7 @@
     "icon": "icon",
     "notice": "notify",
     "table": "Table",
+    "form" : "Form",
     "login": {
       "login": "Log in",
       "password": "Password",
