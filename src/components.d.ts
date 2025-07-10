@@ -10,6 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AvatarMenu: typeof import('./components/Avatar/AvatarMenu.vue')['default']
     ChangeLocale: typeof import('./components/Themes/ChangeLocale.vue')['default']
+    copy: typeof import('./components/Form/FormLayout copy.vue')['default']
     DarkModeToggle: typeof import('./components/Themes/DarkModeToggle.vue')['default']
     DragIcon: typeof import('./components/Table/DragIcon.vue')['default']
     Dropdown: typeof import('./components/Menu/Dropdown.vue')['default']
@@ -54,6 +55,8 @@ declare module 'vue' {
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTimePicker: typeof import('element-plus/es')['ElTimePicker']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    FormLayout: typeof import('./components/Form/FormLayout.vue')['default']
+    FormLayoutSchema: typeof import('./components/Form/FormLayoutSchema.vue')['default']
     FullScreen: typeof import('./components/Themes/FullScreen.vue')['default']
     Header: typeof import('./components/Layouts/Header.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']

@@ -11,6 +11,11 @@
 </template>
 
 <script setup lang="ts">
+definePage({
+  meta: {
+    hideMenu: true,
+  }
+})
 interface Row {
   [key: string]: any
 }
