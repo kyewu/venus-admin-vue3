@@ -1,20 +1,32 @@
 <template>
-  <el-form v-bind="props" style="max-width: 600px">
+  <el-form class="w-full px-4" ref="formRef" :model="model" :rules="rules" >
     <slot name="default">
+      <el-row :class="rowClass" :style="rowStyle">
         <template v-if="schema && schema.length">
           <template v-for="(item, index) in schema" :key="index">
-            <VFormLayout v-bind="item" v-model="form[item.prop as string]"></VFormLayout>
+            <VFormLayoutSchema
+              v-if="item?.schema?.length"
+              v-bind="item"
+              v-model="model"
+            ></VFormLayoutSchema>
+            <VFormLayout v-else v-bind="item" v-model="model[item.prop as string]"></VFormLayout>
           </template>
         </template>
+      </el-row>
     </slot>
     <slot name="actions"></slot>
   </el-form>
 </template>
 
 <script setup lang="ts">
-import type { VFormProps } from './types';
-import VFormLayout from './FormLayout.vue';
+import type { VFormProps } from './types'
+import VFormLayout from './FormLayout.vue'
+import VFormLayoutSchema from './VFormLayoutSchema.vue'
+import { useForm } from './useForm'
+import type { FormInstance, FormItemProp } from 'element-plus';
+import { exposeEventUtils } from '@/utils';
 
+const formRef = ref<FormInstance>()
 const props = withDefaults(defineProps<VFormProps>(), {
   inline: false,
   labelPosition: 'right',
@@ -25,42 +37,35 @@ const props = withDefaults(defineProps<VFormProps>(), {
   statusIcon: false,
   validateOnRuleChange: false,
   disabled: false,
-  scrollToError: false
-},
-)
-const form =ref()
-const emits = defineEmits(['update:modelValue'])
-
-onBeforeMount(() => {
-  form.value = setForm(props?.schema || [], 0)
+  scrollToError: false,
 })
+const emits = defineEmits<{
+  'update:modelValue': [model: any],
+  validate: [(prop: FormItemProp, isValid: boolean, message: string) => void]
+}>()
 
-watch(() => form.value, () => {
-  console.log('form changed', form.value)
-  // Emit the form value change
-  emits('update:modelValue', form.value)
-}, { deep: true })
+const formExposeNames = [
+  'validate',
+  'validateField',
+  'resetFields',
+  'scrollToField',
+  'clearValidate',
+  'fields',
+  'getField'
+]
 
-function setForm(arr: any[], level: any) {
-  const obj = {}
-  let i = 0
-  arr.forEach((item) => {
-    if(!item.prop) {
-      item.prop = `form-${level}-${i}`
-    }
-    if(item.value) {
-      obj[item.prop] = item.value
-    } else if(item.schema?.length) {
-      obj[item.prop] = setForm(item.schema, level + 1)
-      i++
-    } else {
-      obj[item.prop] = undefined
-    }
-  })
-  return obj
-}
+const expose = exposeEventUtils(formRef, formExposeNames)
+defineExpose({...expose})
+const { model, rules } = useForm(props.schema || [])
 
-
+watch(
+  () => model.value,
+  () => {
+    // Emit the form value change
+    emits('update:modelValue', model.value)
+  },
+  { deep: true },
+)
 </script>
 
 <style scoped></style>
