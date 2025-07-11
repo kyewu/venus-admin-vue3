@@ -12,8 +12,42 @@ export interface LoginFormProps {
   loginItems?: LoginItem[]
 }
 
+export type ComponentType =
+  | 'input'
+  | 'button'
+  | 'input-number'
+  | 'select'
+  | 'option'
+  | 'text'
+  | 'link'
+  | 'rate'
+  | 'slider'
+  | 'switch'
+  | 'checkbox'
+  | 'checkbox-group'
+  | 'radio'
+  | 'radio-button'
+  | 'radio-group'
+  | 'cascader'
+  | 'color-picker'
+  | 'time-picker'
+  | 'time-select'
+  | 'date-picker'
+  | 'transfer'
+  | 'avatar'
+  | 'image'
+  | 'progress'
+  | 'tag'
+  | 'timeline'
+  | 'tree'
+  | 'steps'
+  | 'step'
+  | ''
+  | undefined
+
+
 type FormItemChild = {
-  type?: any
+  type?: ComponentType
   label?: string
   value?: any
   [key: string]: any
@@ -21,7 +55,7 @@ type FormItemChild = {
 
 type NewFormProps = ElFormProps & FormMetaProps
 export interface VFormItemProp extends FormItemProps {
-  type?: string
+  type?: ComponentType
   prop?: string
   value?: any
   // emit events
@@ -36,6 +70,8 @@ export interface VFormItemProp extends FormItemProps {
   defaultSlot?: Component
   errorSlot?: Component
   labelSlot?: Component
+  prefixSlot?: Component
+  suffixSlot?: Component
   // custom component
   itemRef?: (ref: FormItemInstance) => void
 }

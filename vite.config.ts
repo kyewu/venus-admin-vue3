@@ -11,7 +11,7 @@ import { VueRouterAutoImports } from 'unplugin-vue-router'
 import Components from 'unplugin-vue-components/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import Layouts from 'vite-plugin-vue-layouts-next'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+// import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons-ng'
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import process from 'node:process'
@@ -37,7 +37,9 @@ export default defineConfig({
         /\.vue\.[tj]sx?\?vue/, // .vue (vue-loader with experimentalInlineMatchResource enabled)
         /\.md$/, // .md
       ],
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        // ElementPlusResolver()
+      ],
       imports: ['vue', VueRouterAutoImports, '@vueuse/core', 'pinia'],
       dts: 'src/auto-imports.d.ts',
     }),
@@ -45,7 +47,9 @@ export default defineConfig({
       dts: 'src/components.d.ts',
       directoryAsNamespace: false,
       collapseSamePrefixes: true,
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        // ElementPlusResolver()
+      ],
     }),
     Layouts({
       layoutsDirs: 'src/layouts',

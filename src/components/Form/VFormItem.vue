@@ -1,5 +1,8 @@
 <template>
   <el-form-item :ref="(ref) => props?.itemRef && props.itemRef(ref as FormItemInstance)" v-bind="props">
+    <template v-if="prefixSlot">
+      <component :is="prefixSlot" v-bind="prefixSlot"></component>
+    </template>
     <template #default="scope" v-if="defaultSlot">
       <component :is="defaultSlot" v-bind="scope"></component>
     </template>
@@ -15,6 +18,7 @@
           :key="index"
           :label="option.label"
           :value="option.value"
+          v-bind="option"
         />
       </el-select>
       <el-date-picker
@@ -43,6 +47,7 @@
           :key="index"
           :value="option.value"
           :name="option.name"
+          v-bind="option"
         >
           {{ option.label }}
         </el-checkbox>
@@ -56,22 +61,20 @@
           v-for="(option, index) in children"
           :key="index"
           :value="option.value"
+          v-bind="option"
           >{{ option.label }}</el-radio
         >
       </el-radio-group>
-      <el-input
-        v-else-if="type === 'textarea'"
-        v-model="modelValue"
-        type="textarea"
-        v-bind="attrs"
-      />
-      <div v-else v-bind="attrs">{{ value }}</div>
+      <div v-else v-bind="domAttrs">{{ value }}</div>
     </template>
     <template #error="scope" v-if="errorSlot">
       <component :is="errorSlot" v-bind="scope"></component>
     </template>
     <template #label="scope" v-if="labelSlot">
       <component :is="labelSlot" v-bind="scope"></component>
+    </template>
+    <template v-if="suffixSlot">
+      <component :is="suffixSlot" v-bind="props.suffixSlot"></component>
     </template>
   </el-form-item>
 </template>
@@ -90,6 +93,24 @@ const modelValue = defineModel<any>()
 onBeforeMount(() => {
   modelValue.value = props.value
 })
+
+const domAttrs = computed(() => {
+  const attrs = props.attrs || {};
+  // 只保留常用的 DOM 属性
+  const whitelist = [
+    'class', 'style', 'id', 'placeholder', 'title', 'name', 'type', 'disabled', 'readonly',
+    'maxlength', 'minlength', 'rows', 'cols', 'autocomplete', 'autofocus', 'tabindex'
+  ];
+  // 保留 data- 和 aria- 开头的属性
+  return Object.fromEntries(
+    Object.entries(attrs).filter(
+      ([key]) =>
+        whitelist.includes(key) ||
+        key.startsWith('data-') ||
+        key.startsWith('aria-')
+    )
+  );
+});
 </script>
 
 <style scoped></style>

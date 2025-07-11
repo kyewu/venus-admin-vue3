@@ -6,7 +6,6 @@
     </template>
   </VForm>
 </template>
-
 <script setup lang="tsx">
 import type { VFormSchema } from '@/components/Form/types'
 import { useForm } from '@/components/Form/useForm'
@@ -27,6 +26,7 @@ const schema = ref([
     prop: 'name',
     value: '',
     span: 6,
+    attrs: {type: 'text'},
     rules: [
       {
         required: true,
@@ -161,10 +161,11 @@ const schema = ref([
     ],
   },
   {
-    type: 'textarea',
+    type: 'input',
     label: 'Activity form',
     prop: 'desc',
     value: '',
+    attrs: {type: 'textarea'},
     rules: [
       {
         required: true,
