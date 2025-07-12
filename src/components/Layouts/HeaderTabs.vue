@@ -27,20 +27,22 @@
 </template>
 
 <script setup lang="ts">
-
 import { forwardEventUtils } from '@/utils'
 import Dropdown from '../Menu/Dropdown.vue'
 import { TabActions } from './const'
 import Iconify from '../Icon/Iconify.vue'
 import type { HeaderTabEvents, HeaderTabsProps } from './types'
 
-
-
 const emits = defineEmits<HeaderTabEvents>()
 const modelValue = defineModel<string>()
 
 withDefaults(defineProps<HeaderTabsProps>(), {
   data: () => [],
+  stretch: false,
+  closable: false,
+  addable: false,
+  editable: false,
+  tabPosition: 'top',
 })
 
 const eventNames = ['tabClick', 'tabChange', 'tabRemove', 'tabAdd', 'edit']
@@ -76,6 +78,7 @@ const changeClick = (item) => {
 
 <style scoped lang="scss">
 .myTabs {
+  @apply flex-1 overflow-hidden;
   :deep(.el-tabs__header) {
     @apply p-0 m-0 border-b-none flex items-center;
 
