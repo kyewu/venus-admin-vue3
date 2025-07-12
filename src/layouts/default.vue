@@ -26,6 +26,7 @@
           mode="horizontal" :collapse="collapse" class="h-full" :background-color="menuBgColor" @select="handleSelect">
         </Menu>
       </Header>
+      <HeaderTabs v-model="tabsStore.current" :data="tabsStore.tabs" @tab-click="handleTabClick" @tab-remove="tabRemove" @tab-menu-click="onMenuClick"></HeaderTabs>
       <div class="overflow-y-auto h-full">
         <router-view></router-view>
       </div>
@@ -43,6 +44,9 @@ import type { HeaderProps } from '@/components/Layouts/types';
 import type { ThemeSettingsProps } from '@/components/Themes/types';
 import { useMenu } from '@/components/Menu/useMenu';
 import { darken } from '@/utils'
+import { useTabsStore } from '@/stores/tabs';
+import type { TabPaneName, TabsPaneContext } from 'element-plus';
+import { TabActions } from '@/components/Layouts/const';
 
 interface ThemeSettingOptions extends HeaderProps {
   mode: 'vertical' | 'horizontal';
@@ -94,6 +98,8 @@ const subMenus = computed(() => {
 const headerMenus = computed(() => {
   return settings.settings?.mode !== 'top' && settings.settings?.mode === 'mix' ? topMenus.value : menus.value
 })
+
+const route = useRoute()
 
 function generateMenus(routes: RouteRecordRaw[]): AppRouteMenuItem[] {
   const menuData: AppRouteMenuItem[] = []
@@ -160,6 +166,42 @@ useResizeObserver(document.body, (entries) => {
     settings.collapse = false
   }
 })
+
+const tabsStore = useTabsStore()
+watch(route, () => {
+  tabsStore.addTab(route)
+  tabsStore.current = route.name as string
+},{ immediate: true })
+
+const handleTabClick = (tab: TabsPaneContext ) => {
+  const { index } = tab
+  const route = tabsStore.tabs[index!]
+  router.push(route.path)
+}
+
+const tabRemove = (name: TabPaneName) => {
+  tabsStore.removeTab(name)
+  if(tabsStore.current.length) {
+    router.push(tabsStore.current)
+  }
+}
+
+const onMenuClick = (action: TabActions) => {
+  const index = tabsStore.tabs.findIndex((item) => item.name === tabsStore.current)
+  if (action === TabActions.closeAll) {
+    tabsStore.tabs = []
+    const tmpRoute = menus.value.filter((item) => item.path === '/')[0]
+    tabsStore.addTab(tmpRoute)
+    tabsStore.current = tmpRoute.name as string
+  } else if (action === TabActions.closeLeft) {
+    tabsStore.tabs = tabsStore.tabs.splice(index, tabsStore.tabs.length - 1)
+  } else if (action === TabActions.closeRight) {
+    tabsStore.tabs = tabsStore.tabs.splice(0, index + 1)
+  } else if (action === TabActions.closeOthers) {
+    tabsStore.tabs = tabsStore.tabs.splice(index, 1)
+  }
+  router.push(tabsStore.current)
+}
 
 </script>
 

@@ -79,7 +79,7 @@ const emit = defineEmits<{
 }>()
 
 const props = withDefaults(defineProps<Partial<ThemeSettingsProps>>(), {
-  theme: '#fff',
+  theme: '#000',
   menuWidth: 240,
   darkMode: false,
   showLogo: false,

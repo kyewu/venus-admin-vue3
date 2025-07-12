@@ -59,6 +59,7 @@ declare module 'vue' {
     FormLayoutSchema: typeof import('./components/Form/FormLayoutSchema.vue')['default']
     FullScreen: typeof import('./components/Themes/FullScreen.vue')['default']
     Header: typeof import('./components/Layouts/Header.vue')['default']
+    HeaderTabs: typeof import('./components/Layouts/HeaderTabs.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     Iconify: typeof import('./components/Icon/Iconify.vue')['default']
     IconList: typeof import('./components/Icon/IconList.vue')['default']

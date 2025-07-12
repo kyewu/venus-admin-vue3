@@ -15,7 +15,7 @@ import 'element-plus/dist/index.css'
 // import 'element-plus/theme-chalk/dark/css-vars.css'
 import I18n from './modules/i8n'
 import { setupDirective } from './directives'
-
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 const app = createApp(App)
 setupDirective(app)
@@ -23,7 +23,10 @@ app.use(ElementPlus, {
   // size: 'small', // default size
   // locale: zhCn, // set locale
 })
-app.use(createPinia())
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+app.use(pinia)
+
 app.use(router)
 app.use(I18n)
 
