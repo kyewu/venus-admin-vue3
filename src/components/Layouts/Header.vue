@@ -7,6 +7,7 @@
       v-if="settings?.mode !== 'top'"
       v-show="showCollapse"
     ></Iconify>
+    <VBreadcrumb></VBreadcrumb>
     <div class="relative flex-grow overflow-x-hidden">
       <slot></slot>
     </div>
@@ -23,6 +24,7 @@
 
 <script setup lang="ts">
 import Iconify from '../Icon/Iconify.vue';
+import VBreadcrumb from '../Themes/VBreadcrumb.vue';
 import DarkModeToggle from '../Themes/DarkModeToggle.vue';
 import FullScreen from '../Themes/FullScreen.vue';
 import ChangeLocale from '../Themes/ChangeLocale.vue';

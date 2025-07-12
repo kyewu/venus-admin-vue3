@@ -10,7 +10,8 @@
 definePage({
   meta: {
     title: 'pages.icon',
-  }
+  },
+  redirect: '/components/icon/ep-icon',
 })
 </script>
 

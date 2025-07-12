@@ -75,6 +75,7 @@ declare module 'vue' {
     SvgIcon: typeof import('./components/Icon/SvgIcon.vue')['default']
     Table: typeof import('./components/Table/Table.vue')['default']
     ThemeSettings: typeof import('./components/Themes/ThemeSettings.vue')['default']
+    VBreadcrumb: typeof import('./components/Themes/VBreadcrumb.vue')['default']
     VForm: typeof import('./components/Form/VForm.vue')['default']
     VFormItem: typeof import('./components/Form/VFormItem.vue')['default']
     VFormLayoutSchema: typeof import('./components/Form/VFormLayoutSchema.vue')['default']
