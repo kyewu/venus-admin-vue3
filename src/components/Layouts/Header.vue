@@ -7,7 +7,7 @@
       v-if="settings?.mode !== 'top'"
       v-show="showCollapse"
     ></Iconify>
-    <VBreadcrumb v-if="['top', 'mix'].includes(settings?.mode || '')"></VBreadcrumb>
+    <VBreadcrumb v-if="!['top', 'mix'].includes(settings?.mode || '')"></VBreadcrumb>
     <div class="relative flex-grow overflow-x-hidden">
       <slot></slot>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="position-absolute left-0 top-0 w-full h-full overflow-hidden flex">
+  <div class="position-absolute left-0 top-0 w-full h-full overflow-hidden flex" :style="{ '--el-color-primary': settings?.settings?.theme, '--el-menu-active-color': settings?.settings?.theme }">
     <div v-if="settings.settings?.mode !== 'top'" :style="{ width: mixMenuWidth, backgroundColor: menuBgColor }"
       class="h-full shrink-0">
       <el-row class="h-full">

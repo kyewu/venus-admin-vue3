@@ -1,18 +1,29 @@
 <template>
-  <el-menu ref="menuRef" :default-active="defaultActive" :collapse="collapse"
-    :style="{ '--el-bg-color': backgroundColor }" :mode="mode" @select="handleSelect">
-    <SubMenu v-for="(data, index) in filterData" :key="index" :data="data" v-bind="subMenuProps"></SubMenu>
+  <el-menu
+    ref="menuRef"
+    :collapse="collapse"
+    :style="{ '--el-menu-bg-color': backgroundColor }"
+    :mode="mode"
+    :default-active="getActive($route)"
+    @select="handleSelect"
+  >
+    <SubMenu
+      v-for="(data, index) in filterData"
+      :key="index"
+      :data="data"
+      v-bind="subMenuProps"
+    ></SubMenu>
   </el-menu>
 </template>
 
 <script setup lang="ts">
 import type { MenuProps as ElMenuProps, SubMenuProps } from 'element-plus'
-import type { AppRouteMenuItem, IconOptions, MenuSelectEvent } from './types';
-import { useMenu } from './useMenu';
+import type { AppRouteMenuItem, IconOptions, MenuSelectEvent } from './types'
+import { useMenu } from './useMenu'
 
 interface MenuProps extends Partial<ElMenuProps> {
-  data: AppRouteMenuItem[],
-  subMenuProps: SubMenuProps,
+  data: AppRouteMenuItem[]
+  subMenuProps: SubMenuProps
   iconProps?: Partial<IconOptions>
 }
 
@@ -21,8 +32,8 @@ const props = withDefaults(defineProps<Partial<MenuProps>>(), {
   mode: 'horizontal',
   defaultActive: '1',
   iconProps: () => ({ style: { fontSize: '20px' }, class: 'mr-3' }),
-  backgroundColor: 'var(--el-menu-bg-color)',
-  ellipsis: true
+  backgroundColor: '#fff',
+  ellipsis: true,
 })
 
 const emits = defineEmits<{
@@ -48,6 +59,22 @@ const handleSelect = (...args: MenuSelectEvent) => {
   const [index] = args
   const item = getItem(filterData.value, index)
   if (item) emits('select', item)
+}
+
+const getActive = (route: AppRouteMenuItem) => {
+  let key = ''
+  const findKey = (menus: AppRouteMenuItem[]) => {
+    menus.forEach((menu) => {
+      if(menu.name === route.name) {
+        key =  menu.meta?.key
+      }
+      if(menu.children?.length) {
+        findKey(menu.children)
+      }
+    })
+  }
+  findKey(filterData.value)
+  return key
 }
 </script>
 
