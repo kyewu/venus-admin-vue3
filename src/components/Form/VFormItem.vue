@@ -1,80 +1,80 @@
 <template>
-  <el-form-item :ref="(ref) => props?.itemRef && props.itemRef(ref as FormItemInstance)" v-bind="props">
-    <template v-if="prefixSlot">
-      <component :is="prefixSlot" v-bind="prefixSlot"></component>
-    </template>
-    <template #default="scope" v-if="defaultSlot">
-      <component :is="defaultSlot" v-bind="scope"></component>
-    </template>
-    <template #default v-else>
-      <el-input v-if="type === 'input'" v-model="modelValue" v-bind="attrs" />
-      <el-select
-        v-else-if="type === 'select'"
-        v-model="modelValue"
-        v-bind="attrs"
-      >
-        <el-option
-          v-for="(option, index) in children"
-          :key="index"
-          :label="option.label"
-          :value="option.value"
-          v-bind="option"
+  <el-form-item
+    v-bind="props"
+    :ref="(ref) => props?.itemRef && props.itemRef(ref as FormItemInstance)"
+  >
+    <!-- <template v-if="props?.prefixSlot">
+      <component :is="props.prefixSlot" v-bind="props"></component>
+    </template> -->
+    <template #default>
+      <!-- 前缀 -->
+      <template v-if="props?.prefixSlot">
+        <component :is="props.prefixSlot" v-bind="props"></component>
+      </template>
+      <component v-if="props?.defaultSlot" :is="props.defaultSlot" v-bind="props"></component>
+      <div v-else>
+        <el-select v-if="type === 'select'" v-model="modelValue" v-bind="attrs" v-on="events">
+          <el-option
+            :label="item.label"
+            :value="item.value"
+            v-bind="item"
+            v-for="(item, index) in children"
+            :key="index"
+          />
+        </el-select>
+        <el-checkbox-group
+          v-else-if="type === 'checkbox' || type === 'checkbox-group'"
+          v-model="modelValue"
+          v-bind="attrs"
+        >
+          <component
+            :is="'el-' + item.type"
+            :label="item.label"
+            :value="item.value"
+            v-bind="item"
+            v-on="events"
+            v-for="(item, index) in children"
+            :key="index"
+          />
+        </el-checkbox-group>
+        <el-radio-group
+          v-else-if="type === 'radio' || type === 'radio-group'"
+          v-model="modelValue"
+          v-bind="attrs"
+          v-on="events"
+        >
+          <component
+            :is="'el-' + item.type"
+            v-for="(item, index) in children"
+            :key="index"
+            :label="item.value"
+            >{{ item.label }}</component
+          >
+        </el-radio-group>
+        <component
+          :is="'el-' + type"
+          v-else-if="
+            !['checkbox', 'radio', 'select'].includes(type || '') &&
+            typeof type !== 'undefined' &&
+            type !== ''
+          "
+          v-model="modelValue"
+          v-bind="attrs"
+          v-on="events"
+          :ref="(ref) => props.childRef && props.childRef(ref)"
         />
-      </el-select>
-      <el-date-picker
-        v-else-if="type === 'date-picker'"
-        v-model="modelValue"
-        type="date"
-        v-bind="attrs"
-      />
-      <el-time-picker
-        v-else-if="type === 'time-picker'"
-        v-model="modelValue"
-        v-bind="attrs"
-      />
-      <el-switch
-        v-else-if="type === 'switch'"
-        v-model="modelValue"
-        v-bind="attrs"
-      />
-      <el-checkbox-group
-        v-else-if="type === 'checkbox-group'"
-        v-model="modelValue"
-        v-bind="attrs"
-      >
-        <el-checkbox
-          v-for="(option, index) in children"
-          :key="index"
-          :value="option.value"
-          :name="option.name"
-          v-bind="option"
-        >
-          {{ option.label }}
-        </el-checkbox>
-      </el-checkbox-group>
-      <el-radio-group
-        v-else-if="type === 'radio-group'"
-        v-model="modelValue"
-        v-bind="attrs"
-      >
-        <el-radio
-          v-for="(option, index) in children"
-          :key="index"
-          :value="option.value"
-          v-bind="option"
-          >{{ option.label }}</el-radio
-        >
-      </el-radio-group>
-      <div v-else v-bind="domAttrs">{{ value }}</div>
+        <span v-else v-bind="attrs">{{ value }}</span>
+      </div>
+      <!-- 后缀 -->
+      <template v-if="props?.suffixSlot">
+        <component :is="props.suffixSlot" v-bind="props"></component>
+      </template>
     </template>
-    <template #error="scope" v-if="errorSlot">
-      <component :is="errorSlot" v-bind="scope"></component>
+    <template #label="scope" v-if="props?.labelSlot">
+      <component :is="props.labelSlot" v-bind="scope"></component>
     </template>
-    <template #label="scope" v-if="labelSlot">
-      <component :is="labelSlot" v-bind="scope"></component>
-    </template>
-    <template v-if="suffixSlot">
-      <component :is="suffixSlot" v-bind="props.suffixSlot"></component>
+    <template #error="scope" v-if="props.errorSlot">
+      <component :is="props.errorSlot" v-bind="scope"></component>
     </template>
   </el-form-item>
 </template>
@@ -91,26 +91,16 @@ const props = withDefaults(defineProps<VFormItemProp>(), {
 const modelValue = defineModel<any>()
 
 onBeforeMount(() => {
-  modelValue.value = props.value
+  onBeforeMount(() => {
+  // 针对于select类型，如果value为空串，则改成undefined
+  if (props.type === 'select' && props.value === '') {
+    modelValue.value = undefined
+  } else {
+    modelValue.value = props.value
+  }
+})
 })
 
-const domAttrs = computed(() => {
-  const attrs = props.attrs || {};
-  // 只保留常用的 DOM 属性
-  const whitelist = [
-    'class', 'style', 'id', 'placeholder', 'title', 'name', 'type', 'disabled', 'readonly',
-    'maxlength', 'minlength', 'rows', 'cols', 'autocomplete', 'autofocus', 'tabindex'
-  ];
-  // 保留 data- 和 aria- 开头的属性
-  return Object.fromEntries(
-    Object.entries(attrs).filter(
-      ([key]) =>
-        whitelist.includes(key) ||
-        key.startsWith('data-') ||
-        key.startsWith('aria-')
-    )
-  );
-});
 </script>
 
 <style scoped></style>

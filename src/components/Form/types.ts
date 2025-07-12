@@ -74,6 +74,7 @@ export interface VFormItemProp extends FormItemProps {
   suffixSlot?: Component
   // custom component
   itemRef?: (ref: FormItemInstance) => void
+  childRef?: (ref: any) => void
 }
 export type VFormSchema = Array<VFormItemProp>
 export interface VFormProps extends Partial<NewFormProps> {

@@ -3,6 +3,7 @@
     <template #actions>
       <el-button type="primary" @click="onSubmit">submit</el-button>
       <el-button type="default" @click="onCancel">Cancel</el-button>
+      {{ model }}
     </template>
   </VForm>
 </template>
@@ -19,161 +20,502 @@ definePage({
 })
 const formRef = ref<FormInstance>()
 const formItemRef = ref<FormItemInstance>()
+
+const icon = () => {
+  return (
+    <>
+      <i class='i-el:home mr-2'> hello </i>
+    </>
+  )
+}
 const schema = ref([
   {
-    type: 'input',
-    label: 'Activity name',
     prop: 'name',
     value: '',
-    span: 6,
-    attrs: {type: 'text'},
+    label: 'Activity name',
+    type: 'input',
+    prefixSlot: icon,
     rules: [
-      {
-        required: true,
-        message: 'Please input activity name',
-        trigger: 'change',
-      },
+      { required: true, message: 'Please input Activity name', trigger: 'blur' },
+      { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' }
     ],
     itemRef: (ref: FormItemInstance) => {
       formItemRef.value = ref
     },
-    // labelSlot: (scope: any) => (
-    //   <span class="text-gray-500">
-    //      <span class="text-red-500 pr-2">*R</span>{scope.label}
-    //   </span>
-    // ),
+    class: 'flex'
   },
   {
-    type: 'input',
-    label: 'Activity ID',
-    prop: 'id',
-    value: '',
-    span: 6,
-    rules: [
-      { required: true, message: 'Please input activity ID', trigger: 'blur' },
-    ],
-  },
-  {
-    type: 'select',
-    label: 'Activity zone',
-    span: 6,
     prop: 'region',
     value: '',
-    attrs: { placeholder: 'Please select activity zone'},
+    label: 'Activity zone',
+    type: 'select',
+    span: 10,
     rules: [
       {
         required: true,
-        message: 'Please select activity zone',
-        trigger: 'change',
+        message: 'Please select Activity zone'
+      }
+    ],
+    attrs: {
+      placeholder: 'Select Activity zone',
+      style: {
+        width: '200px'
       },
-    ],
+      clearable: true
+    },
     children: [
-      { label: 'Zone one', value: 'shanghai' },
-      { label: 'Zone two', value: 'beijing' },
-    ],
+      {
+        label: 'Zone one',
+        value: 'shanghai'
+      },
+      {
+        label: 'Zone two',
+        value: 'beijing'
+      }
+    ]
   },
   {
+    span: 11,
+    prop: 'date1',
+    value: '',
+    type: 'date-picker',
+    label: 'Pick a date~~~',
+    attrs: {
+      type: 'date',
+      placeholder: 'Pick a datehaha',
+      style: {
+        width: '100%'
+      },
+      clearable: true
+    },
+    rules: [
+      {
+        type: 'date',
+        required: true,
+        message: 'Please pick a date',
+        trigger: 'change'
+      }
+    ]
+  },
+  {
+    prop: '',
     label: 'Activity time',
     schema: [
       {
-        type: 'date-picker',
-        prop: 'date',
-        label: 'Start Date',
         span: 11,
+        prop: 'date12',
         value: '',
+        type: 'date-picker',
+        label: 'Pick a date111',
+        attrs: {
+          type: 'date',
+          placeholder: 'Pick a date aaa',
+          style: {
+            width: '100%'
+          },
+          clearable: true
+        },
+        events: {
+          change: (e) => {
+            console.log('🚀 ~ e:', e)
+          }
+        },
         rules: [
           {
+            type: 'date',
             required: true,
-            message: 'Please select start date',
-            trigger: 'change',
-          },
-        ],
-        attrs: { placeholder: 'Pick a date', style: 'width: 100%' },
+            message: 'Please pick a date!!!!',
+            trigger: 'change'
+          }
+        ]
       },
       {
-        value: '-',
         span: 2,
-        attrs: { class: 'w-full', style: 'text-align: center' },
+        value: '-',
+        attrs: {
+          class: 'text-center w-full'
+        }
       },
       {
+        span: 11,
         type: 'time-picker',
         prop: 'date2',
-        span: 11,
         value: '',
+        label: 'Pick a time',
+        attrs: {
+          placeholder: 'Pick a time',
+          style: {
+            width: '100%'
+          },
+          clearable: true
+        },
         rules: [
           {
+            type: 'date',
             required: true,
-            message: 'Please select start time',
-            trigger: 'change',
-          },
-        ],
-        attrs: { placeholder: 'Pick a time', style: 'width: 100%' },
-      },
-    ],
+            message: 'Please pick a time',
+            trigger: 'change'
+          }
+        ]
+      }
+    ]
   },
-  { type: 'switch', label: 'Instant delivery', prop: 'delivery', value: false },
+  { prop: 'delivery', value: false, label: 'Instant delivery', type: 'switch' },
   {
-    type: 'checkbox-group',
-    label: 'Activity type',
+    type: 'rate',
+    prop: 'rate',
+    value: '',
+    label: 'Rate'
+  },
+  {
     prop: 'type',
     value: [],
+    label: 'Activity type',
+    type: 'checkbox-group',
     rules: [
       {
+        type: 'array',
         required: true,
         message: 'Please select at least one activity type',
-        trigger: 'change',
-      },
+        trigger: 'change'
+      }
     ],
     children: [
-      { label: 'Online activities', value: 'Online activities', name: 'type' },
       {
+        type: 'checkbox',
+        label: 'Online activities',
+        name: 'type'
+      },
+      {
+        type: 'checkbox',
         label: 'Promotion activities',
-        value: 'Promotion activities',
-        name: 'type',
+        name: 'type'
       },
       {
+        type: 'checkbox',
         label: 'Offline activities',
-        value: 'Offline activities',
-        name: 'type',
+        name: 'type'
       },
       {
+        type: 'checkbox',
         label: 'Simple brand exposure',
-        value: 'Simple brand exposure',
-        name: 'type',
-      },
-    ],
+        name: 'type'
+      }
+    ]
   },
   {
     type: 'radio-group',
-    label: 'Resources',
     prop: 'resource',
-    value: '',
+    label: 'Resources',
+    value: 1,
+    children: [
+      {
+        type: 'radio',
+        label: 'Sponsor',
+        value: 1
+      },
+      {
+        type: 'radio',
+        label: 'Venue',
+        value: 2
+      }
+    ],
     rules: [
       {
         required: true,
-        message: 'Please select resource type',
-        trigger: 'change',
-      },
-    ],
-    children: [
-      { label: 'Sponsorship', value: 'Sponsorship' },
-      { label: 'Venue', value: 'Venue' },
-    ],
+        message: 'Please select activity resource',
+        trigger: 'change'
+      }
+    ]
   },
   {
     type: 'input',
-    label: 'Activity form',
     prop: 'desc',
     value: '',
-    attrs: {type: 'textarea'},
-    rules: [
-      {
-        required: true,
-        message: 'Please input activity form',
-        trigger: 'blur',
-      },
-    ],
+    attrs: {
+      type: 'textarea'
+    },
+    rules: [{ required: true, message: 'Please input activity form', trigger: 'blur' }]
   },
+  {
+    type: 'cascader',
+    prop: 'component',
+    attrs: {
+      options: [
+        {
+          value: 'guide',
+          label: 'Guide',
+          children: [
+            {
+              value: 'disciplines',
+              label: 'Disciplines',
+              children: [
+                {
+                  value: 'consistency',
+                  label: 'Consistency'
+                },
+                {
+                  value: 'feedback',
+                  label: 'Feedback'
+                },
+                {
+                  value: 'efficiency',
+                  label: 'Efficiency'
+                },
+                {
+                  value: 'controllability',
+                  label: 'Controllability'
+                }
+              ]
+            },
+            {
+              value: 'navigation',
+              label: 'Navigation',
+              children: [
+                {
+                  value: 'side nav',
+                  label: 'Side Navigation'
+                },
+                {
+                  value: 'top nav',
+                  label: 'Top Navigation'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          value: 'component',
+          label: 'Component',
+          children: [
+            {
+              value: 'basic',
+              label: 'Basic',
+              children: [
+                {
+                  value: 'layout',
+                  label: 'Layout'
+                },
+                {
+                  value: 'color',
+                  label: 'Color'
+                },
+                {
+                  value: 'typography',
+                  label: 'Typography'
+                },
+                {
+                  value: 'icon',
+                  label: 'Icon'
+                },
+                {
+                  value: 'button',
+                  label: 'Button'
+                }
+              ]
+            },
+            {
+              value: 'form',
+              label: 'Form',
+              children: [
+                {
+                  value: 'radio',
+                  label: 'Radio'
+                },
+                {
+                  value: 'checkbox',
+                  label: 'Checkbox'
+                },
+                {
+                  value: 'input',
+                  label: 'Input'
+                },
+                {
+                  value: 'input-number',
+                  label: 'InputNumber'
+                },
+                {
+                  value: 'select',
+                  label: 'Select'
+                },
+                {
+                  value: 'cascader',
+                  label: 'Cascader'
+                },
+                {
+                  value: 'switch',
+                  label: 'Switch'
+                },
+                {
+                  value: 'slider',
+                  label: 'Slider'
+                },
+                {
+                  value: 'time-picker',
+                  label: 'TimePicker'
+                },
+                {
+                  value: 'date-picker',
+                  label: 'DatePicker'
+                },
+                {
+                  value: 'datetime-picker',
+                  label: 'DateTimePicker'
+                },
+                {
+                  value: 'upload',
+                  label: 'Upload'
+                },
+                {
+                  value: 'rate',
+                  label: 'Rate'
+                },
+                {
+                  value: 'form',
+                  label: 'Form'
+                }
+              ]
+            },
+            {
+              value: 'data',
+              label: 'Data',
+              children: [
+                {
+                  value: 'table',
+                  label: 'Table'
+                },
+                {
+                  value: 'tag',
+                  label: 'Tag'
+                },
+                {
+                  value: 'progress',
+                  label: 'Progress'
+                },
+                {
+                  value: 'tree',
+                  label: 'Tree'
+                },
+                {
+                  value: 'pagination',
+                  label: 'Pagination'
+                },
+                {
+                  value: 'badge',
+                  label: 'Badge'
+                }
+              ]
+            },
+            {
+              value: 'notice',
+              label: 'Notice',
+              children: [
+                {
+                  value: 'alert',
+                  label: 'Alert'
+                },
+                {
+                  value: 'loading',
+                  label: 'Loading'
+                },
+                {
+                  value: 'message',
+                  label: 'Message'
+                },
+                {
+                  value: 'message-box',
+                  label: 'MessageBox'
+                },
+                {
+                  value: 'notification',
+                  label: 'Notification'
+                }
+              ]
+            },
+            {
+              value: 'navigation',
+              label: 'Navigation',
+              children: [
+                {
+                  value: 'menu',
+                  label: 'Menu'
+                },
+                {
+                  value: 'tabs',
+                  label: 'Tabs'
+                },
+                {
+                  value: 'breadcrumb',
+                  label: 'Breadcrumb'
+                },
+                {
+                  value: 'dropdown',
+                  label: 'Dropdown'
+                },
+                {
+                  value: 'steps',
+                  label: 'Steps'
+                }
+              ]
+            },
+            {
+              value: 'others',
+              label: 'Others',
+              children: [
+                {
+                  value: 'dialog',
+                  label: 'Dialog'
+                },
+                {
+                  value: 'tooltip',
+                  label: 'Tooltip'
+                },
+                {
+                  value: 'popover',
+                  label: 'Popover'
+                },
+                {
+                  value: 'card',
+                  label: 'Card'
+                },
+                {
+                  value: 'carousel',
+                  label: 'Carousel'
+                },
+                {
+                  value: 'collapse',
+                  label: 'Collapse'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          value: 'resource',
+          label: 'Resource',
+          children: [
+            {
+              value: 'axure',
+              label: 'Axure Components'
+            },
+            {
+              value: 'sketch',
+              label: 'Sketch Templates'
+            },
+            {
+              value: 'docs',
+              label: 'Design Documentation'
+            }
+          ]
+        }
+      ]
+    },
+    events: {
+      change: (value) => {
+        console.log(value)
+      }
+    }
+  }
 ] as VFormSchema)
 
 const { model } = useForm(schema.value || [])
