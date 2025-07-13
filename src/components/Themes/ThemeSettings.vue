@@ -50,7 +50,14 @@
       </el-form-item>
       <!-- trasition -->
       <el-form-item label="Transition">
-        <el-switch v-model="form.transition"></el-switch>
+        <el-select v-model="form.transition">
+          <el-option
+            v-for="(transition, index) in TRANSITION_NAMES"
+            :key="index"
+            :label="transition"
+            :value="transition"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <!-- tag page -->
       <el-form-item label="Tabs Page">
@@ -70,7 +77,7 @@
 
 <script setup lang="ts">
 import Iconify from '../Icon/Iconify.vue';
-import { TransitionNameEnum } from './constant';
+import { TransitionNameEnum, TRANSITION_NAMES } from './constant';
 import type { ThemeSettingsProps } from './types';
 
 const drawer = ref(false)

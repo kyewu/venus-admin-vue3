@@ -1,5 +1,4 @@
-
-import type { Ref } from "vue"
+import type { Ref } from 'vue'
 
 /**
  * Convert a kebab-case string to camelCase
@@ -13,17 +12,25 @@ export function kebabToCamel(str: string): string {
   return result
 }
 
+export function camelToHyphen(str: string): string {
+  return str.replace(/\B([A-Z])/g, '-$1').toLowerCase()
+}
+
 /**
  * Creates a record of event handler functions that forward the specified events.
  * Each handler emits an event with an optional prefix and camelCase conversion.
- * 
+ *
  * @param {function} emits - The emit function used to trigger events.
  * @param {string[]} arr - An array of event names in kebab-case to be converted and forwarded.
  * @param {string} [prefix=''] - An optional prefix to prepend to the event names.
  * @returns {Record<string, (...args: any[]) => void>} A record of event handler functions.
  */
 
-export function forwardEventUtils(emits: any, arr: string[], prefix: string = '') {
+export function forwardEventUtils(
+  emits: any,
+  arr: string[],
+  prefix: string = '',
+) {
   const forwardEvents: Record<string, (...args: any[]) => void> = {}
 
   arr.forEach((eventName) => {
@@ -43,7 +50,7 @@ export function exposeEventUtils(ref: Ref<any>, arr: string[]) {
 
   arr.forEach((exposeName) => {
     exposeMethods[exposeName] = (...args: any[]) => {
-      if(ref.value && typeof ref.value[exposeName] === 'function') {
+      if (ref.value && typeof ref.value[exposeName] === 'function') {
         ref.value[exposeName](...args)
       } else {
         return ref.value[exposeName]

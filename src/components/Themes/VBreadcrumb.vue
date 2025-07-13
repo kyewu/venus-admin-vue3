@@ -22,7 +22,7 @@
 import { useRoute } from 'vue-router'
 const route = useRoute()
 const breadcrumbData = ref<any>([])
-
+console.log(route)
 const ArrowRight = () => <i class="i-ep:arrow-right"></i>
 
 function getBreadcrumbData() {
