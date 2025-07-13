@@ -10,6 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AvatarMenu: typeof import('./components/Avatar/AvatarMenu.vue')['default']
     ChangeLocale: typeof import('./components/Themes/ChangeLocale.vue')['default']
+    CollapseTransition: typeof import('./components/Transition/CollapseTransition.vue')['default']
     copy: typeof import('./components/Form/FormLayout copy.vue')['default']
     DarkModeToggle: typeof import('./components/Themes/DarkModeToggle.vue')['default']
     DragIcon: typeof import('./components/Table/DragIcon.vue')['default']

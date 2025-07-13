@@ -1,4 +1,4 @@
-@import './styles/transition.scss';
+@use './styles/transition.scss';
 
 .el-menu--collapse {
   .el-sub-menu .iconify, .el-menu-item .iconify {

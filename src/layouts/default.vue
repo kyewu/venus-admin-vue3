@@ -61,54 +61,66 @@
         </el-scrollbar>
       </el-row>
     </div>
-    <div class="content w-full h-full flex-1 overflow-hidden">
-      <Header
-        :locales="locales"
-        :show-collapse="settings.settings?.mode !== 'top'"
-        :username="username"
-        :src="avatar"
-        :data="avatarMenu"
-        v-model:collapse="collapse"
-        @themeSettingsChange="handleThemeChange"
-      >
-        <Menu
-          v-if="
-            settings.settings?.mode === 'top' ||
-            settings.settings?.mode === 'mix'
-          "
-          :data="headerMenus"
-          mode="horizontal"
-          :collapse="collapse"
-          class="h-full"
-          :background-color="menuBgColor"
-          @select="handleSelect"
-        >
-        </Menu>
-      </Header>
-      <HeaderTabs
-        v-model="tabsStore.current"
-        :data="tabsStore.tabs"
-        @tab-click="handleTabClick"
-        @tab-remove="tabRemove"
-        @tab-menu-click="onMenuClick"
-      ></HeaderTabs>
+    <div class="relative w-full h-full flex-1 overflow-hidden">
       <div class="overflow-y-auto h-full">
-        <transition
-          :name="
-            camelToHyphen(settings.settings?.transition || 'fade') +
-            '-transition'
-          "
-          mode="out-in"
+        <Header
+          :locales="locales"
+          :show-collapse="settings.settings?.mode !== 'top'"
+          :username="username"
+          :src="avatar"
+          :data="avatarMenu"
+          v-model:collapse="collapse"
+          @themeSettingsChange="handleThemeChange"
         >
-          <router-view v-if="$route.meta.keepAlive" v-slot="{ Component }">
-            <keep-alive :key="settings.settings?.transition">
-              <component :is="Component" :key="$route.fullPath"></component>
-            </keep-alive>
-          </router-view>
-          <router-view v-else v-slot="{ Component}">
-            <component :is="Component" :key="$route.fullPath"></component>
-          </router-view>
-        </transition>
+          <Menu
+            v-if="
+              settings.settings?.mode === 'top' ||
+              settings.settings?.mode === 'mix'
+            "
+            :data="headerMenus"
+            mode="horizontal"
+            :collapse="collapse"
+            class="h-full"
+            :background-color="menuBgColor"
+            @select="handleSelect"
+          >
+          </Menu>
+        </Header>
+        <HeaderTabs
+          v-model="tabsStore.current"
+          :data="tabsStore.tabs"
+          @tab-click="handleTabClick"
+          @tab-remove="tabRemove"
+          @tab-menu-click="onMenuClick"
+        ></HeaderTabs>
+        <div :class="['p-2 bg', contentClass]">
+          <el-scrollbar>
+            <transition
+              :name="
+                camelToHyphen(settings.settings?.transition || 'fade') +
+                '-transition'
+              "
+              mode="out-in"
+            >
+              <router-view v-if="$route.meta.keepAlive" v-slot="{ Component }">
+                <keep-alive :key="settings.settings?.transition">
+                  <component
+                    :is="Component"
+                    :class="['rounded  bg-[var(--el-bg-color)] shadow p-4']"
+                    :key="$route.fullPath"
+                  ></component>
+                </keep-alive>
+              </router-view>
+              <router-view v-else v-slot="{ Component }">
+                <component
+                  :is="Component"
+                  :class="['rounded  bg-[var(--el-bg-color)] shadow p-4']"
+                  :key="$route.fullPath"
+                ></component>
+              </router-view>
+            </transition>
+          </el-scrollbar>
+        </div>
       </div>
     </div>
   </div>
@@ -296,9 +308,28 @@ const onMenuClick = (action: TabActions) => {
   }
   router.push(tabsStore.current)
 }
+
+const contentClass = computed(() => {
+  if (settings.settings?.fixedHead) {
+    if (settings.settings?.showTabs) {
+      return 'h-[calc(100%-90px)]'
+    } else {
+      return 'h-[calc(100%-50px)]'
+    }
+  } else {
+    if (settings.settings?.showTabs) {
+      return 'min-h-[calc(100%-90px)]'
+    } else {
+      return 'min-h-[calc(100%-50px)]'
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>
+.bg {
+  background-color: var(--el-fill-color-light);
+}
 .mixbar {
   :deep(.el-menu-item),
   :deep(.el-sub-menu__title) {
@@ -315,5 +346,12 @@ const onMenuClick = (action: TabActions) => {
       margin-bottom: 10px;
     }
   }
+}
+
+:deep(.el-scrollbar__view) {
+  height: 100%;
+}
+:deep(.el-scrollbar__wrap) {
+  height: 100%;
 }
 </style>

@@ -33,6 +33,8 @@ declare module 'vue-router/auto-routes' {
     '/components/table/complex': RouteRecordInfo<'/components/table/complex', '/components/table/complex', Record<never, never>, Record<never, never>>,
     '/components/table/high': RouteRecordInfo<'/components/table/high', '/components/table/high', Record<never, never>, Record<never, never>>,
     '/components/table/Popover': RouteRecordInfo<'/components/table/Popover', '/components/table/Popover', Record<never, never>, Record<never, never>>,
+    '/components/transition': RouteRecordInfo<'/components/transition', '/components/transition', Record<never, never>, Record<never, never>>,
+    '/components/transition/': RouteRecordInfo<'/components/transition/', '/components/transition', Record<never, never>, Record<never, never>>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
   }
 }

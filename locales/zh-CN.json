@@ -6,7 +6,8 @@
     "basic-table": "基础表格",
     "complex-table": "复杂表格",
     "high-table": "高级表格",
-    "form" : "表单"
+    "form" : "表单",
+    "collapse-transition": "折叠过渡"
   },
   "pages": {
     "home": "主页",
@@ -16,6 +17,7 @@
     "icon": "图标",
     "table": "表格",
     "form" : "表单",
+    "transition": "过渡",
     "login": {
       "username": "用户名",
       "password": "密码",
