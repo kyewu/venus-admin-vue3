@@ -1,5 +1,17 @@
 import type { Ref } from 'vue'
 
+
+/**
+ * 首字母大写
+ * @example
+ * capitalizeFirstLetter('hello') // 'Hello'
+ * @param {string} str - 输入字符串
+ * @returns {string} 首字母大写后的字符串
+ */
+export function capitalizeFirstLetter(str: string): string {
+  if (!str) return ''
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
 /**
  * Convert a kebab-case string to camelCase
  * @example
