@@ -7,7 +7,8 @@
     "complex-table": "Complex Table",
     "high-table": "High Table",
     "form" : "Form",
-    "collapse-transition": "Collapse Transition"
+    "collapse-transition": "Collapse Transition",
+    "editor": "Editor"
   },
   "pages": {
     "home": "Home",
@@ -18,6 +19,7 @@
     "table": "Table",
     "form" : "Form",
     "transition": "Transition",
+    "editor": "Editor",
     "login": {
       "login": "Log in",
       "password": "Password",

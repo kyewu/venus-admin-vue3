@@ -14,6 +14,7 @@ declare module 'vue' {
     DarkModeToggle: typeof import('./components/Themes/DarkModeToggle.vue')['default']
     DragIcon: typeof import('./components/Table/DragIcon.vue')['default']
     Dropdown: typeof import('./components/Menu/Dropdown.vue')['default']
+    Editor: typeof import('./components/Editor/Editor.vue')['default']
     FormLayout: typeof import('./components/Form/FormLayout.vue')['default']
     FullScreen: typeof import('./components/Themes/FullScreen.vue')['default']
     Header: typeof import('./components/Layouts/Header.vue')['default']
