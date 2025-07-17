@@ -17,11 +17,13 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@types/video.js": "^7.3.58",
     "@unocss/reset": "66.1.0-beta.8",
     "@vueuse/core": "^13.0.0",
     "@vueuse/rxjs": "^13.4.0",
     "dayjs": "^1.11.13",
     "defu": "^6.1.4",
+    "dplayer": "^1.27.1",
     "echarts": "^5.6.0",
     "element-plus": "^2.10.2",
     "gsap": "^3.13.0",
@@ -30,6 +32,7 @@
     "rxjs": "^7.8.2",
     "sortablejs": "^1.15.6",
     "vditor": "^3.11.1",
+    "video.js": "^8.23.3",
     "vue": "^3.5.13",
     "vue-echarts": "^7.0.3",
     "vue-router": "^4.5.0"

@@ -41,5 +41,6 @@ declare module 'vue' {
     VFormLayoutSchema: typeof import('./components/Form/VFormLayoutSchema.vue')['default']
     VTable: typeof import('./components/Table/VTable.vue')['default']
     VTableColumn: typeof import('./components/Table/VTableColumn.vue')['default']
+    VueVideo: typeof import('./components/Video/VueVideo.vue')['default']
   }
 }

@@ -1,10 +1,17 @@
-import type { IconifyIcon } from "@iconify/vue"
-import type { ColProps, FormProps as ElFormProps, FormItemInstance, FormItemProps, FormItemRule, FormMetaProps} from 'element-plus'
-import type { CSSProperties, Component } from "vue"
+import type { IconifyIcon } from '@iconify/vue'
+import type {
+  ColProps,
+  FormProps as ElFormProps,
+  FormItemInstance,
+  FormItemProps,
+  FormItemRule,
+  FormMetaProps,
+} from 'element-plus'
+import type { CSSProperties, Component } from 'vue'
 
 export interface LoginItem {
   icon: IconifyIcon | string
-  url: string,
+  url: string
 }
 export interface LoginFormProps {
   position?: 'left' | 'right' | 'center'
@@ -45,7 +52,6 @@ export type ComponentType =
   | ''
   | undefined
 
-
 type FormItemChild = {
   type?: ComponentType
   label?: string
@@ -61,7 +67,7 @@ export interface VFormItemProp extends FormItemProps {
   // emit events
   events?: any
   // self extensions
-  attrs?: any,
+  attrs?: any
   span?: number
   colProps?: ColProps
   children?: FormItemChild[]
